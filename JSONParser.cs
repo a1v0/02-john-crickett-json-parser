@@ -20,18 +20,17 @@
 
 ParseJSON("   {");
 
-static object ParseJSON(string rawJSON)
+static Dictionary<string, dynamic> ParseJSON(string rawJSON)
 {
     Exception invalidJSON = new Exception("Input is not valid JSON.");
-    // is there a way to create a more specific return type than just "object"? Something like an interface that doesn't require defining property names
     string trimmedJSON = rawJSON.Trim();
 
-    Console.WriteLine(new Object());
+    if (trimmedJSON.Length == 0) throw invalidJSON;
+    if (trimmedJSON[0] is not '{') throw invalidJSON;
 
-if (trimmedJSON.Length == 0) throw invalidJSON;
-if (trimmedJSON[0] is not '{') throw invalidJSON;
+    Dictionary<string, dynamic> parsedJSON = new Dictionary<string, dynamic>();
 
-return new Object();
+    return parsedJSON;
 }
 
 static string StringifyJSON(object jsonTarget) { return new String(""); }
