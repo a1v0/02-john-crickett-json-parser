@@ -33,4 +33,4 @@ static Dictionary<string, dynamic> ParseJSON(string rawJSON)
     return parsedJSON;
 }
 
-static string StringifyJSON(object jsonTarget) { return new String(""); }
+static string StringifyJSON(Dictionary<string,dynamic> jsonTarget) { return new String(""); }
