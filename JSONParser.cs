@@ -1,6 +1,7 @@
 ﻿/*
  * Wanted to make a test suite with these tests but couldn't get xUnit to work:
  * - returns empty object if string is "{}"
+ * - returns empty object if string is "{           }"
  * - ignores white space and line breaks
  * - parses string key/value pairs
  * - parses numbers (incl. floats)
@@ -23,12 +24,14 @@ static object ParseJSON(string rawJSON)
 {
     Exception invalidJSON = new Exception("Input is not valid JSON.");
     // is there a way to create a more specific return type than just "object"? Something like an interface that doesn't require defining property names
-    string trimmedJSON=rawJSON.Trim();
+    string trimmedJSON = rawJSON.Trim();
 
-    if (trimmedJSON.Length == 0) throw invalidJSON;
-    if (trimmedJSON[0] is not '{') throw invalidJSON;
+    Console.WriteLine(new Object());
 
-    return new Object();
+if (trimmedJSON.Length == 0) throw invalidJSON;
+if (trimmedJSON[0] is not '{') throw invalidJSON;
+
+return new Object();
 }
 
 static string StringifyJSON(object jsonTarget) { return new String(""); }
