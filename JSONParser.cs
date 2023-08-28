@@ -17,12 +17,17 @@
  *   - missing closing bracket
  */
 
+ParseJSON("   {");
 
 static object ParseJSON(string rawJSON)
 {
+    Exception invalidJSON = new Exception("Input is not valid JSON.");
     // is there a way to create a more specific return type than just "object"? Something like an interface that doesn't require defining property names
-    // trim input
-    // early return if first character isn't "{"
+    string trimmedJSON=rawJSON.Trim();
+
+    if (trimmedJSON.Length == 0) throw invalidJSON;
+    if (trimmedJSON[0] is not '{') throw invalidJSON;
+
     return new Object();
 }
 
