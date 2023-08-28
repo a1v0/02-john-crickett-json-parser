@@ -1,6 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-Console.WriteLine(JSONParser("ghfksjh"));
+Console.WriteLine(ParseJSON("ghfksjh"));
 
 // trim input
 // early return if first character isn't "{"
@@ -21,7 +21,9 @@ Console.WriteLine(JSONParser("ghfksjh"));
 // - missing comma
 // - missing closing bracket
 
-static object JSONParser(string rawJSON)
+static object ParseJSON(string rawJSON)
 {
     return new Object();
 }
+
+static string StringifyJSON(object jsonTarget) { return new String(); }
