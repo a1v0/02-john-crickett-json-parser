@@ -19,7 +19,7 @@
  *   - missing closing bracket
  */
 
-ParseJSON("   ");
+//ParseJSON("   ");
 ParseJSON("   {");
 ParseJSON("   {}");
 
@@ -35,13 +35,54 @@ static Dictionary<string, dynamic> ParseJSON(string rawJSON)
 
     Dictionary<string, dynamic> parsedJSON = new Dictionary<string, dynamic>();
 
+    Dictionary<char, int> charCounter = GetCharCounter();
+
+    Console.WriteLine(DictionaryToString(charCounter));
+
     // loop through JSON
     // keep tally of all open curly brackets
     // keep tally of all open square brackets
     // keep tally of all open strings
 
     return parsedJSON;
+}
 
+static Dictionary<char, int> GetCharCounter()
+{
+    Dictionary<char, int> charCounter = new Dictionary<char, int>();
+
+    string chars = "{}[]\"";
+    foreach (char i in chars)
+    {
+        charCounter.Add(i, 0);
+    }
+
+    return charCounter;
 }
 
 static string StringifyJSON(Dictionary<string, dynamic> jsonTarget) { return new String(""); }
+
+//static string DictionaryToString(Dictionary<dynamic, dynamic> dictionary)
+//{
+//    List<string> pairs = new List<string>();
+
+//    foreach (KeyValuePair<dynamic, dynamic> keyValuePair in dictionary)
+//    {
+//        pairs.Add(string.Format("{0}: {1}", keyValuePair.Key, keyValuePair.Value));
+//    }
+
+//    return String.Join(",\n", pairs.ToArray());
+//}
+
+static string DictionaryToString(Dictionary<char, int> dictionary)
+{
+    List<string> pairs = new List<string>();
+
+    foreach (KeyValuePair<char, int> keyValuePair in dictionary)
+    {
+        pairs.Add(string.Format("    {0} {1}: {2}", keyValuePair.Key.GetType().Name, keyValuePair.Key, keyValuePair.Value));
+    }
+
+    string result= String.Join(",\n", pairs.ToArray());
+    return "{\n" + result + "\n}";
+}
