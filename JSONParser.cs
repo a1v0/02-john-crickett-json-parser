@@ -27,26 +27,21 @@ static Dictionary<string, dynamic> ParseJSON(string rawJSON)
 {
     string errorMessage = "Input is not valid JSON.";
     Exception invalidJSON = new Exception(errorMessage);
-    try
-    {
-        string trimmedJSON = rawJSON.Trim();
 
-        if (trimmedJSON.Length == 0) throw invalidJSON;
-        if (trimmedJSON[0] is not '{') throw invalidJSON;
+    string trimmedJSON = rawJSON.Trim();
 
-        Dictionary<string, dynamic> parsedJSON = new Dictionary<string, dynamic>();
+    if (trimmedJSON.Length == 0) throw invalidJSON;
+    if (trimmedJSON[0] is not '{') throw invalidJSON;
 
-        // loop through JSON
-        // keep tally of all open curly brackets
-        // keep tally of all open square brackets
-        // keep tally of all open strings
+    Dictionary<string, dynamic> parsedJSON = new Dictionary<string, dynamic>();
 
-        return parsedJSON;
-    }
-    catch (Exception exception)
-    {
-        Console.WriteLine(errorMessage);
-    }
+    // loop through JSON
+    // keep tally of all open curly brackets
+    // keep tally of all open square brackets
+    // keep tally of all open strings
+
+    return parsedJSON;
+
 }
 
 static string StringifyJSON(Dictionary<string, dynamic> jsonTarget) { return new String(""); }
