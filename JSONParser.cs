@@ -39,13 +39,10 @@ static Dictionary<string, dynamic> ParseJSON(string rawJSON)
 
     Console.WriteLine(DictionaryToString(charCounter));
 
-    // loop through JSON
-    // keep tally of all open curly brackets
-    // keep tally of all open square brackets
-    // keep tally of all open strings
-
     return parsedJSON;
 }
+
+
 
 static Dictionary<char, int> GetCharCounter()
 {
@@ -80,9 +77,16 @@ static string DictionaryToString(Dictionary<char, int> dictionary)
 
     foreach (KeyValuePair<char, int> keyValuePair in dictionary)
     {
-        pairs.Add(string.Format("    {0} {1}: {2}", keyValuePair.Key.GetType().Name, keyValuePair.Key, keyValuePair.Value));
+        string type = keyValuePair.Key.GetType().Name;
+        string key = keyValuePair.Key.ToString();
+        string value = keyValuePair.Value.ToString();
+
+        string pair = string.Format("    {0} {1}: {2}", type, key, value);
+
+        pairs.Add(pair);
     }
 
-    string result= String.Join(",\n", pairs.ToArray());
+    string result = String.Join(",\n", pairs.ToArray());
+
     return "{\n" + result + "\n}";
 }
