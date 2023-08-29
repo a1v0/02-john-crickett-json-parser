@@ -42,7 +42,13 @@ static Dictionary<string, dynamic> ParseJSON(string rawJSON)
     return parsedJSON;
 }
 
+static void LoopThroughInput(string rawJSON, Dictionary<string, dynamic> parsedJSON, Dictionary<char, int> charcounter)
+{
+    foreach (char c in rawJSON)
+    {
 
+    }
+}
 
 static Dictionary<char, int> GetCharCounter()
 {
