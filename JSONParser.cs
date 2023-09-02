@@ -45,7 +45,7 @@ static Dictionary<string, dynamic> ParseJSON(string rawJSON)
     return parsedJSON;
 }
 
-static void LoopThroughInput(string rawJSON, Dictionary<string, dynamic> parsedJSON, Dictionary<char, int> charcounter)
+static void LoopThroughInput(string rawJSON, Dictionary<string, dynamic> parsedJSON, Dictionary<char, short> charcounter)
 {
     foreach (char c in rawJSON)
     {
