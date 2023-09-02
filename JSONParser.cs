@@ -93,6 +93,18 @@ static void CloseBrackets(char closingCharacter, Dictionary<char, short> charCou
     throw new Exception(exceptionMessage);
 }
 
+static void FinalBracketsCheck(Dictionary<char, short> charCounter)
+{
+    foreach(char c in charCounter.Keys)
+    {
+        if (charCounter[c]!=0)
+        {
+            string exceptionMessage= String.Format("Paired Character Exception: could not parse input because of missing partner to an unclosed '{0}' character.", c);
+            throw new Exception(exceptionMessage);
+        }
+    }
+}
+
 static Dictionary<char, short> GetCharCounter()
 {
     Dictionary<char, short> charCounter = new Dictionary<char, short>();
