@@ -23,8 +23,8 @@
  */
 
 // ParseJSON("   ");
-ParseJSON("   {");
 ParseJSON("   {}");
+ParseJSON("   {");
 
 static Dictionary<string, dynamic> ParseJSON(string rawJSON)
 {
@@ -42,6 +42,7 @@ static Dictionary<string, dynamic> ParseJSON(string rawJSON)
 
     LoopThroughInput(rawJSON, parsedJSON, charCounter);
 
+    FinalBracketsCheck(charCounter);
     Console.WriteLine(DictionaryToString(charCounter));
 
     return parsedJSON;
