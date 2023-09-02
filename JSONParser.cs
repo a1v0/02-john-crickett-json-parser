@@ -38,7 +38,7 @@ static Dictionary<string, dynamic> ParseJSON(string rawJSON)
 
     Dictionary<string, dynamic> parsedJSON = new Dictionary<string, dynamic>();
 
-    Dictionary<char, int> charCounter = GetCharCounter();
+    Dictionary<char, short> charCounter = GetCharCounter();
 
     Console.WriteLine(DictionaryToString(charCounter));
 
@@ -53,9 +53,9 @@ static void LoopThroughInput(string rawJSON, Dictionary<string, dynamic> parsedJ
     }
 }
 
-static Dictionary<char, int> GetCharCounter()
+static Dictionary<char, short> GetCharCounter()
 {
-    Dictionary<char, int> charCounter = new Dictionary<char, int>();
+    Dictionary<char, short> charCounter = new Dictionary<char, short>();
 
     string chars = "{}[]\"";
     foreach (char i in chars)
@@ -80,11 +80,11 @@ static string StringifyJSON(Dictionary<string, dynamic> jsonTarget) { return new
 //    return String.Join(",\n", pairs.ToArray());
 //}
 
-static string DictionaryToString(Dictionary<char, int> dictionary)
+static string DictionaryToString(Dictionary<char, short> dictionary)
 {
     List<string> pairs = new List<string>();
 
-    foreach (KeyValuePair<char, int> keyValuePair in dictionary)
+    foreach (KeyValuePair<char, short> keyValuePair in dictionary)
     {
         string type = keyValuePair.Key.GetType().Name;
         string key = keyValuePair.Key.ToString();
