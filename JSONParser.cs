@@ -22,7 +22,7 @@
  *   - missing closing bracket
  */
 
-//ParseJSON("   ");
+// ParseJSON("   ");
 ParseJSON("   {");
 ParseJSON("   {}");
 
@@ -40,16 +40,31 @@ static Dictionary<string, dynamic> ParseJSON(string rawJSON)
 
     Dictionary<char, short> charCounter = GetCharCounter();
 
+    LoopThroughInput(rawJSON, parsedJSON, charCounter);
+
     Console.WriteLine(DictionaryToString(charCounter));
 
     return parsedJSON;
 }
 
-static void LoopThroughInput(string rawJSON, Dictionary<string, dynamic> parsedJSON, Dictionary<char, short> charcounter)
+static void LoopThroughInput(string rawJSON, Dictionary<string, dynamic> parsedJSON, Dictionary<char, short> charCounter)
 {
+    string closingChararacters = "]}";
+
     foreach (char c in rawJSON)
     {
+        if (charCounter.ContainsKey(c))
+        {
+            // this will need refactoring/expanding for " characters, where the opening and closing char looks the same
+            ++charCounter[c];
+        }
 
+        if (closingChararacters.Contains(c))
+        {
+            // create method to handle the closing of brackets
+            // - reduce number of open brackets by 1
+            // - throw exception if that number is negative
+        }
     }
 }
 
@@ -57,7 +72,7 @@ static Dictionary<char, short> GetCharCounter()
 {
     Dictionary<char, short> charCounter = new Dictionary<char, short>();
 
-    string chars = "{}[]\"";
+    string chars = "{[\"";
     foreach (char i in chars)
     {
         charCounter.Add(i, 0);
