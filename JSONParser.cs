@@ -49,7 +49,7 @@ static Dictionary<string, dynamic> ParseJSON(string rawJSON)
 
 static void LoopThroughInput(string rawJSON, Dictionary<string, dynamic> parsedJSON, Dictionary<char, short> charCounter)
 {
-    string closingChararacters = "]}";
+    string closingCharacters = "]}";
 
     foreach (char c in rawJSON)
     {
@@ -59,13 +59,38 @@ static void LoopThroughInput(string rawJSON, Dictionary<string, dynamic> parsedJ
             ++charCounter[c];
         }
 
-        if (closingChararacters.Contains(c))
+        if (closingCharacters.Contains(c))
         {
-            // create method to handle the closing of brackets
-            // - reduce number of open brackets by 1
-            // - throw exception if that number is negative
+            CloseBrackets(c, charCounter);
         }
     }
+}
+
+static void CloseBrackets(char closingCharacter, Dictionary<char, short> charCounter)
+{
+    char? openingCharacter = null;
+
+    switch (closingCharacter)
+    {
+        case '}':
+            openingCharacter = '{';
+            break;
+        case ']':
+            openingCharacter = '[';
+            break;
+        default:
+            break;
+    }
+
+    if (!openingCharacter.HasValue) throw new Exception();
+
+    // so long as the number of open brackets doesn't go below 0, all is well
+    short newValue = --charCounter[(char)openingCharacter];
+    if (newValue >= 0) return;
+
+
+    string exceptionMessage = String.Format("Paired Character Exception: could not parse input because of either a missing or superfluous '{0}' character.", openingCharacter);
+    throw new Exception(exceptionMessage);
 }
 
 static Dictionary<char, short> GetCharCounter()
