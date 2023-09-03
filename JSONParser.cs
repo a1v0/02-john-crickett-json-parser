@@ -43,7 +43,9 @@ static Dictionary<string, dynamic> ParseJSON(string rawJSON)
     LoopThroughInput(rawJSON, parsedJSON, charCounter);
 
     FinalBracketsCheck(charCounter);
+    Console.WriteLine("charCounter:");
     Console.WriteLine(CharCounterToString(charCounter));
+    Console.WriteLine("Parsed JSON output:");
     Console.WriteLine(ParsedJSONObjectToString(parsedJSON));
 
     return parsedJSON;
