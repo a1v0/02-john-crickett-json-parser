@@ -22,9 +22,9 @@
  *   - missing closing bracket
  */
 
-// ParseJSON("   ");
-// ParseJSON("   {");
-ParseJSON("   {}");
+// ParseJSON("   "); // test case: FAIL empty string
+// ParseJSON("   {"); // test case: FAIL unclosed bracket
+ParseJSON("   {}"); // test case: PASS empty JSON object
 
 static Dictionary<string, dynamic> ParseJSON(string rawJSON)
 {
@@ -43,6 +43,7 @@ static Dictionary<string, dynamic> ParseJSON(string rawJSON)
     LoopThroughInput(rawJSON, parsedJSON, charCounter);
 
     FinalBracketsCheck(charCounter);
+
     Console.WriteLine("charCounter:");
     Console.WriteLine(CharCounterToString(charCounter));
     Console.WriteLine("Parsed JSON output:");
@@ -159,6 +160,8 @@ static string ParsedJSONObjectToString(Dictionary<string, dynamic> dictionary)
 
         pairs.Add(pair);
     }
+
+    if (pairs.Count == 0) return "{}";
 
     string result = String.Join(",\n", pairs.ToArray());
 
