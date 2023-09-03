@@ -23,8 +23,8 @@
  */
 
 // ParseJSON("   ");
+// ParseJSON("   {");
 ParseJSON("   {}");
-ParseJSON("   {");
 
 static Dictionary<string, dynamic> ParseJSON(string rawJSON)
 {
@@ -43,7 +43,8 @@ static Dictionary<string, dynamic> ParseJSON(string rawJSON)
     LoopThroughInput(rawJSON, parsedJSON, charCounter);
 
     FinalBracketsCheck(charCounter);
-    Console.WriteLine(DictionaryToString(charCounter));
+    Console.WriteLine(CharCounterToString(charCounter));
+    Console.WriteLine(ParsedJSONObjectToString(parsedJSON));
 
     return parsedJSON;
 }
@@ -96,11 +97,11 @@ static void CloseBrackets(char closingCharacter, Dictionary<char, short> charCou
 
 static void FinalBracketsCheck(Dictionary<char, short> charCounter)
 {
-    foreach(char c in charCounter.Keys)
+    foreach (char c in charCounter.Keys)
     {
-        if (charCounter[c]!=0)
+        if (charCounter[c] != 0)
         {
-            string exceptionMessage= String.Format("Paired Character Exception: could not parse input because of missing partner to an unclosed '{0}' character.", c);
+            string exceptionMessage = String.Format("Paired Character Exception: could not parse input because of missing partner to an unclosed '{0}' character.", c);
             throw new Exception(exceptionMessage);
         }
     }
@@ -121,23 +122,32 @@ static Dictionary<char, short> GetCharCounter()
 
 static string StringifyJSON(Dictionary<string, dynamic> jsonTarget) { return new String(""); }
 
-//static string DictionaryToString(Dictionary<dynamic, dynamic> dictionary)
-//{
-//    List<string> pairs = new List<string>();
-
-//    foreach (KeyValuePair<dynamic, dynamic> keyValuePair in dictionary)
-//    {
-//        pairs.Add(string.Format("{0}: {1}", keyValuePair.Key, keyValuePair.Value));
-//    }
-
-//    return String.Join(",\n", pairs.ToArray());
-//}
-
-static string DictionaryToString(Dictionary<char, short> dictionary)
+static string CharCounterToString(Dictionary<char, short> dictionary)
 {
     List<string> pairs = new List<string>();
 
     foreach (KeyValuePair<char, short> keyValuePair in dictionary)
+    {
+        string type = keyValuePair.Key.GetType().Name;
+        string key = keyValuePair.Key.ToString();
+        string value = keyValuePair.Value.ToString();
+
+        string pair = string.Format("    {0} {1}: {2}", type, key, value);
+
+        pairs.Add(pair);
+    }
+
+    string result = String.Join(",\n", pairs.ToArray());
+
+    return "{\n" + result + "\n}";
+}
+
+// this needs a better name to make it clearly distinct from the Stringify method
+static string ParsedJSONObjectToString(Dictionary<string, dynamic> dictionary)
+{
+    List<string> pairs = new List<string>();
+
+    foreach (KeyValuePair<string, dynamic> keyValuePair in dictionary)
     {
         string type = keyValuePair.Key.GetType().Name;
         string key = keyValuePair.Key.ToString();
