@@ -29,16 +29,16 @@ ParseJSON("   {}"); // test case: PASS empty JSON object
 static Dictionary<string, dynamic> ParseJSON(string rawJSON)
 {
     string errorMessage = "Input is not valid JSON.";
-    Exception invalidJSON = new Exception(errorMessage);
+    var invalidJSON = new Exception(errorMessage);
 
     string trimmedJSON = rawJSON.Trim();
 
     if (trimmedJSON.Length == 0) throw invalidJSON;
     if (trimmedJSON[0] is not '{') throw invalidJSON;
 
-    Dictionary<string, dynamic> parsedJSON = new Dictionary<string, dynamic>();
+    var parsedJSON = new Dictionary<string, dynamic>();
 
-    Dictionary<char, short> charCounter = GetCharCounter();
+    var charCounter = GetCharCounter();
 
     LoopThroughInput(rawJSON, parsedJSON, charCounter);
 
@@ -119,7 +119,7 @@ static void FinalBracketsCheck(Dictionary<char, short> charCounter)
 
 static Dictionary<char, short> GetCharCounter()
 {
-    Dictionary<char, short> charCounter = new Dictionary<char, short>();
+    var charCounter = new Dictionary<char, short>();
 
     string chars = "{[\"";
     foreach (char i in chars)
@@ -134,7 +134,7 @@ static string StringifyJSON(Dictionary<string, dynamic> jsonTarget) { return new
 
 static string CharCounterToString(Dictionary<char, short> dictionary)
 {
-    List<string> pairs = new List<string>();
+    var pairs = new List<string>();
 
     foreach (KeyValuePair<char, short> keyValuePair in dictionary)
     {
@@ -155,7 +155,7 @@ static string CharCounterToString(Dictionary<char, short> dictionary)
 // this needs a better name to make it clearly distinct from the Stringify method
 static string ParsedJSONObjectToString(Dictionary<string, dynamic> dictionary)
 {
-    List<string> pairs = new List<string>();
+    var pairs = new List<string>();
 
     foreach (KeyValuePair<string, dynamic> keyValuePair in dictionary)
     {
