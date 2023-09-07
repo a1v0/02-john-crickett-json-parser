@@ -22,9 +22,9 @@
  *   - missing closing bracket
  */
 
-var test1 = new JSONParser("   ").Parse(); // test case: FAIL empty string
-var test2 = new JSONParser("   {").Parse(); // test case: FAIL unclosed bracket
-var test3 = new JSONParser("   {}").Parse(); // test case: PASS empty JSON object
+new JSONParser("   ").Parse(); // test case: FAIL empty string
+new JSONParser("   {").Parse(); // test case: FAIL unclosed bracket
+new JSONParser("   {}").Parse(); // test case: PASS empty JSON object
 
 public class JSONParser
 {
@@ -189,43 +189,5 @@ public class JSONStringifier
 
     public JSONStringifier(Dictionary<string, dynamic> dataToBeStringified) { input = dataToBeStringified; }
 
-    public string Stringify() { }
+    //public string Stringify() { }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
