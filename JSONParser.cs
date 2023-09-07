@@ -22,6 +22,54 @@
  *   - missing closing bracket
  */
 
+
+public class JSONParser
+{
+    public string input;
+
+    public JSONParser(string jsonInput)
+    {
+        input = jsonInput;
+    }
+
+    public Dictionary<string, dynamic> Parse() { }
+}
+
+/***************************************************************************************************************************/
+
+public class JSONStringifier
+{
+    public Dictionary<string, dynamic> input;
+
+    public JSONStringifier(Dictionary<string, dynamic> dataToBeStringified) { input = dataToBeStringified; }
+
+    public string Stringify() { }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ParseJSON("   "); // test case: FAIL empty string
 // ParseJSON("   {"); // test case: FAIL unclosed bracket
 ParseJSON("   {}"); // test case: PASS empty JSON object
