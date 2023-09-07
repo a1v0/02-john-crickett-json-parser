@@ -32,17 +32,15 @@ public class JSONParser
 
     public JSONParser(string jsonInput)
     {
-        input = jsonInput;
+        input = jsonInput.Trim();
     }
 
     public Dictionary<string, dynamic> Parse() {
         string errorMessage = "Input is not valid JSON.";
         var invalidJSON = new Exception(errorMessage);
 
-        string trimmedJSON = this.input.Trim();
-
-        if (trimmedJSON.Length == 0) throw invalidJSON;
-        if (trimmedJSON[0] is not '{') throw invalidJSON;
+        if (this.input.Length == 0) throw invalidJSON;
+        if (this.input[0] is not '{') throw invalidJSON;
 
         var parsedJSON = new Dictionary<string, dynamic>();
 
@@ -59,6 +57,33 @@ public class JSONParser
 
         return parsedJSON;
     }
+
+private void LoopThroughInput(string rawJSON, Dictionary<string, dynamic> parsedJSON, Dictionary<char, short> charCounter)
+{
+    string closingCharacters = "]}";
+
+    foreach (char c in rawJSON)
+    {
+        // state explicitly what we are expecting (bracket, key (i.e. string), value, colon, comma etc.)
+        // - this might make most sense as a string field, e.g. expecting = "comma"
+        // - this way, if we're 'inside' a key, we can ignore any spaces, brackets etc.
+        // use a switch statement to control the logic (e.g. if we're expectinng a key, go to method FindKey or something)
+        // foreach might not be appropriate, because it might make more sense for the individual methods to update the character we're working on. As such, a conventional for loop, wherein we can update the position of c, might be more sensible
+        // might also need some sort of recursion for nested objects.
+        // - perhaps, therefore, I need to investigate using substrings, identifying where the closing bracket is before I parse it
+
+        if (charCounter.ContainsKey(c))
+        {
+            // this will need refactoring/expanding for " characters, where the opening and closing char looks the same
+            ++charCounter[c];
+        }
+
+        if (closingCharacters.Contains(c))
+        {
+            CloseBrackets(c, charCounter);
+        }
+    }
+}
 }
 
 /***************************************************************************************************************************/
@@ -99,32 +124,6 @@ public class JSONStringifier
 
 
 
-static void LoopThroughInput(string rawJSON, Dictionary<string, dynamic> parsedJSON, Dictionary<char, short> charCounter)
-{
-    string closingCharacters = "]}";
-
-    foreach (char c in rawJSON)
-    {
-        // state explicitly what we are expecting (bracket, key (i.e. string), value, colon, comma etc.)
-        // - this might make most sense as a string field, e.g. expecting = "comma"
-        // - this way, if we're 'inside' a key, we can ignore any spaces, brackets etc.
-        // use a switch statement to control the logic (e.g. if we're expectinng a key, go to method FindKey or something)
-        // foreach might not be appropriate, because it might make more sense for the individual methods to update the character we're working on. As such, a conventional for loop, wherein we can update the position of c, might be more sensible
-        // might also need some sort of recursion for nested objects.
-        // - perhaps, therefore, I need to investigate using substrings, identifying where the closing bracket is before I parse it
-
-        if (charCounter.ContainsKey(c))
-        {
-            // this will need refactoring/expanding for " characters, where the opening and closing char looks the same
-            ++charCounter[c];
-        }
-
-        if (closingCharacters.Contains(c))
-        {
-            CloseBrackets(c, charCounter);
-        }
-    }
-}
 
 static void CloseBrackets(char closingCharacter, Dictionary<char, short> charCounter)
 {
