@@ -22,6 +22,9 @@
  *   - missing closing bracket
  */
 
+var test1 = new JSONParser("   ").Parse(); // test case: FAIL empty string
+var test2 = new JSONParser("   {").Parse(); // test case: FAIL unclosed bracket
+var test3 = new JSONParser("   {}").Parse(); // test case: PASS empty JSON object
 
 public class JSONParser
 {
@@ -70,9 +73,6 @@ public class JSONStringifier
 
 
 
-// ParseJSON("   "); // test case: FAIL empty string
-// ParseJSON("   {"); // test case: FAIL unclosed bracket
-ParseJSON("   {}"); // test case: PASS empty JSON object
 
 static Dictionary<string, dynamic> ParseJSON(string rawJSON)
 {
