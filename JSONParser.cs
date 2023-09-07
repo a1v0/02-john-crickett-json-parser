@@ -183,7 +183,6 @@ public class JSONStringifier
 
 
 
-static string StringifyJSON(Dictionary<string, dynamic> jsonTarget) { return new String(""); }
 
 static string CharCounterToString(Dictionary<char, short> dictionary)
 {
