@@ -63,6 +63,8 @@ static void LoopThroughInput(string rawJSON, Dictionary<string, dynamic> parsedJ
         // - this way, if we're 'inside' a key, we can ignore any spaces, brackets etc.
         // use a switch statement to control the logic (e.g. if we're expectinng a key, go to method FindKey or something)
         // foreach might not be appropriate, because it might make more sense for the individual methods to update the character we're working on. As such, a conventional for loop, wherein we can update the position of c, might be more sensible
+        // might also need some sort of recursion for nested objects.
+        // - perhaps, therefore, I need to investigate using substrings, identifying where the closing bracket is before I parse it
 
         if (charCounter.ContainsKey(c))
         {
@@ -98,7 +100,6 @@ static void CloseBrackets(char closingCharacter, Dictionary<char, short> charCou
     // so long as the number of open brackets doesn't go below 0, all is well
     short newValue = --charCounter[(char)openingCharacter];
     if (newValue >= 0) return;
-
 
     string exceptionMessage = String.Format("Paired Character Exception: could not parse input because of either a missing or superfluous '{0}' character.", openingCharacter);
     throw new Exception(exceptionMessage);
