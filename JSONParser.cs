@@ -136,6 +136,26 @@ public class JSONParser
 
         return charCounter;
     }
+
+    private static string CharCounterToString(Dictionary<char, short> dictionary)
+    {
+        var pairs = new List<string>();
+
+        foreach (KeyValuePair<char, short> keyValuePair in dictionary)
+        {
+            string type = keyValuePair.Key.GetType().Name;
+            string key = keyValuePair.Key.ToString();
+            string value = keyValuePair.Value.ToString();
+
+            string pair = string.Format("    {0} {1}: {2}", type, key, value);
+
+            pairs.Add(pair);
+        }
+
+        string result = String.Join(",\n", pairs.ToArray());
+
+        return "{\n" + result + "\n}";
+    }
 }
 
 /***************************************************************************************************************************/
@@ -184,25 +204,7 @@ public class JSONStringifier
 
 
 
-static string CharCounterToString(Dictionary<char, short> dictionary)
-{
-    var pairs = new List<string>();
 
-    foreach (KeyValuePair<char, short> keyValuePair in dictionary)
-    {
-        string type = keyValuePair.Key.GetType().Name;
-        string key = keyValuePair.Key.ToString();
-        string value = keyValuePair.Value.ToString();
-
-        string pair = string.Format("    {0} {1}: {2}", type, key, value);
-
-        pairs.Add(pair);
-    }
-
-    string result = String.Join(",\n", pairs.ToArray());
-
-    return "{\n" + result + "\n}";
-}
 
 // this needs a better name to make it clearly distinct from the Stringify method
 static string ParsedJSONObjectToString(Dictionary<string, dynamic> dictionary)
