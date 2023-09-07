@@ -123,6 +123,19 @@ public class JSONParser
             }
         }
     }
+
+    private static Dictionary<char, short> GetCharCounter()
+    {
+        var charCounter = new Dictionary<char, short>();
+
+        string chars = "{[\"";
+        foreach (char i in chars)
+        {
+            charCounter.Add(i, 0);
+        }
+
+        return charCounter;
+    }
 }
 
 /***************************************************************************************************************************/
@@ -168,18 +181,7 @@ public class JSONStringifier
 
 
 
-static Dictionary<char, short> GetCharCounter()
-{
-    var charCounter = new Dictionary<char, short>();
 
-    string chars = "{[\"";
-    foreach (char i in chars)
-    {
-        charCounter.Add(i, 0);
-    }
-
-    return charCounter;
-}
 
 static string StringifyJSON(Dictionary<string, dynamic> jsonTarget) { return new String(""); }
 
