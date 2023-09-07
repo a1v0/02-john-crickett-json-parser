@@ -156,6 +156,29 @@ public class JSONParser
 
         return "{\n" + result + "\n}";
     }
+
+    // this needs a better name to make it clearly distinct from the Stringify method
+    private static string ParsedJSONObjectToString(Dictionary<string, dynamic> dictionary)
+    {
+        var pairs = new List<string>();
+
+        foreach (KeyValuePair<string, dynamic> keyValuePair in dictionary)
+        {
+            string type = keyValuePair.Key.GetType().Name;
+            string key = keyValuePair.Key.ToString();
+            string value = keyValuePair.Value.ToString();
+
+            string pair = string.Format("    {0} {1}: {2}", type, key, value);
+
+            pairs.Add(pair);
+        }
+
+        if (pairs.Count == 0) return "{}";
+
+        string result = String.Join(",\n", pairs.ToArray());
+
+        return "{\n" + result + "\n}";
+    }
 }
 
 /***************************************************************************************************************************/
@@ -206,25 +229,3 @@ public class JSONStringifier
 
 
 
-// this needs a better name to make it clearly distinct from the Stringify method
-static string ParsedJSONObjectToString(Dictionary<string, dynamic> dictionary)
-{
-    var pairs = new List<string>();
-
-    foreach (KeyValuePair<string, dynamic> keyValuePair in dictionary)
-    {
-        string type = keyValuePair.Key.GetType().Name;
-        string key = keyValuePair.Key.ToString();
-        string value = keyValuePair.Value.ToString();
-
-        string pair = string.Format("    {0} {1}: {2}", type, key, value);
-
-        pairs.Add(pair);
-    }
-
-    if (pairs.Count == 0) return "{}";
-
-    string result = String.Join(",\n", pairs.ToArray());
-
-    return "{\n" + result + "\n}";
-}
