@@ -35,7 +35,30 @@ public class JSONParser
         input = jsonInput;
     }
 
-    public Dictionary<string, dynamic> Parse() { }
+    public Dictionary<string, dynamic> Parse() {
+        string errorMessage = "Input is not valid JSON.";
+        var invalidJSON = new Exception(errorMessage);
+
+        string trimmedJSON = this.input.Trim();
+
+        if (trimmedJSON.Length == 0) throw invalidJSON;
+        if (trimmedJSON[0] is not '{') throw invalidJSON;
+
+        var parsedJSON = new Dictionary<string, dynamic>();
+
+        var charCounter = GetCharCounter();
+
+        LoopThroughInput(rawJSON, parsedJSON, charCounter);
+
+        FinalBracketsCheck(charCounter);
+
+        Console.WriteLine("charCounter:");
+        Console.WriteLine(CharCounterToString(charCounter));
+        Console.WriteLine("Parsed JSON output:");
+        Console.WriteLine(ParsedJSONObjectToString(parsedJSON));
+
+        return parsedJSON;
+    }
 }
 
 /***************************************************************************************************************************/
@@ -74,31 +97,7 @@ public class JSONStringifier
 
 
 
-static Dictionary<string, dynamic> ParseJSON(string rawJSON)
-{
-    string errorMessage = "Input is not valid JSON.";
-    var invalidJSON = new Exception(errorMessage);
 
-    string trimmedJSON = rawJSON.Trim();
-
-    if (trimmedJSON.Length == 0) throw invalidJSON;
-    if (trimmedJSON[0] is not '{') throw invalidJSON;
-
-    var parsedJSON = new Dictionary<string, dynamic>();
-
-    var charCounter = GetCharCounter();
-
-    LoopThroughInput(rawJSON, parsedJSON, charCounter);
-
-    FinalBracketsCheck(charCounter);
-
-    Console.WriteLine("charCounter:");
-    Console.WriteLine(CharCounterToString(charCounter));
-    Console.WriteLine("Parsed JSON output:");
-    Console.WriteLine(ParsedJSONObjectToString(parsedJSON));
-
-    return parsedJSON;
-}
 
 static void LoopThroughInput(string rawJSON, Dictionary<string, dynamic> parsedJSON, Dictionary<char, short> charCounter)
 {
