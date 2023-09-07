@@ -35,7 +35,8 @@ public class JSONParser
         input = jsonInput.Trim();
     }
 
-    public Dictionary<string, dynamic> Parse() {
+    public Dictionary<string, dynamic> Parse()
+    {
         string errorMessage = "Input is not valid JSON.";
         var invalidJSON = new Exception(errorMessage);
 
@@ -46,7 +47,7 @@ public class JSONParser
 
         var charCounter = GetCharCounter();
 
-        LoopThroughInput(rawJSON, parsedJSON, charCounter);
+        LoopThroughInput(parsedJSON, charCounter);
 
         FinalBracketsCheck(charCounter);
 
@@ -58,32 +59,58 @@ public class JSONParser
         return parsedJSON;
     }
 
-private void LoopThroughInput(string rawJSON, Dictionary<string, dynamic> parsedJSON, Dictionary<char, short> charCounter)
-{
-    string closingCharacters = "]}";
-
-    foreach (char c in rawJSON)
+    private void LoopThroughInput(Dictionary<string, dynamic> parsedJSON, Dictionary<char, short> charCounter)
     {
-        // state explicitly what we are expecting (bracket, key (i.e. string), value, colon, comma etc.)
-        // - this might make most sense as a string field, e.g. expecting = "comma"
-        // - this way, if we're 'inside' a key, we can ignore any spaces, brackets etc.
-        // use a switch statement to control the logic (e.g. if we're expectinng a key, go to method FindKey or something)
-        // foreach might not be appropriate, because it might make more sense for the individual methods to update the character we're working on. As such, a conventional for loop, wherein we can update the position of c, might be more sensible
-        // might also need some sort of recursion for nested objects.
-        // - perhaps, therefore, I need to investigate using substrings, identifying where the closing bracket is before I parse it
+        string closingCharacters = "]}";
 
-        if (charCounter.ContainsKey(c))
+        foreach (char c in this.input)
         {
-            // this will need refactoring/expanding for " characters, where the opening and closing char looks the same
-            ++charCounter[c];
-        }
+            // state explicitly what we are expecting (bracket, key (i.e. string), value, colon, comma etc.)
+            // - this might make most sense as a string field, e.g. expecting = "comma"
+            // - this way, if we're 'inside' a key, we can ignore any spaces, brackets etc.
+            // use a switch statement to control the logic (e.g. if we're expectinng a key, go to method FindKey or something)
+            // foreach might not be appropriate, because it might make more sense for the individual methods to update the character we're working on. As such, a conventional for loop, wherein we can update the position of c, might be more sensible
+            // might also need some sort of recursion for nested objects.
+            // - perhaps, therefore, I need to investigate using substrings, identifying where the closing bracket is before I parse it
 
-        if (closingCharacters.Contains(c))
-        {
-            CloseBrackets(c, charCounter);
+            if (charCounter.ContainsKey(c))
+            {
+                // this will need refactoring/expanding for " characters, where the opening and closing char looks the same
+                ++charCounter[c];
+            }
+
+            if (closingCharacters.Contains(c))
+            {
+                CloseBrackets(c, charCounter);
+            }
         }
     }
-}
+
+    private void CloseBrackets(char closingCharacter, Dictionary<char, short> charCounter)
+    {
+        char? openingCharacter = null;
+
+        switch (closingCharacter)
+        {
+            case '}':
+                openingCharacter = '{';
+                break;
+            case ']':
+                openingCharacter = '[';
+                break;
+            default:
+                break;
+        }
+
+        if (!openingCharacter.HasValue) throw new Exception();
+
+        // so long as the number of open brackets doesn't go below 0, all is well
+        short newValue = --charCounter[(char)openingCharacter];
+        if (newValue >= 0) return;
+
+        string exceptionMessage = String.Format("Paired Character Exception: could not parse input because of either a missing or superfluous '{0}' character.", openingCharacter);
+        throw new Exception(exceptionMessage);
+    }
 }
 
 /***************************************************************************************************************************/
@@ -125,31 +152,7 @@ public class JSONStringifier
 
 
 
-static void CloseBrackets(char closingCharacter, Dictionary<char, short> charCounter)
-{
-    char? openingCharacter = null;
 
-    switch (closingCharacter)
-    {
-        case '}':
-            openingCharacter = '{';
-            break;
-        case ']':
-            openingCharacter = '[';
-            break;
-        default:
-            break;
-    }
-
-    if (!openingCharacter.HasValue) throw new Exception();
-
-    // so long as the number of open brackets doesn't go below 0, all is well
-    short newValue = --charCounter[(char)openingCharacter];
-    if (newValue >= 0) return;
-
-    string exceptionMessage = String.Format("Paired Character Exception: could not parse input because of either a missing or superfluous '{0}' character.", openingCharacter);
-    throw new Exception(exceptionMessage);
-}
 
 static void FinalBracketsCheck(Dictionary<char, short> charCounter)
 {
