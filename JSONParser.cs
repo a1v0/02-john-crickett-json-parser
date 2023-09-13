@@ -26,7 +26,6 @@ string divider = "--------------------------------------------------------------
 
 
 // PASS TESTS
-
 Console.WriteLine(divider);
 new JSONParser("{}").Parse(); // test case: PASS empty JSON object
 
@@ -40,7 +39,6 @@ Console.WriteLine(divider);
 new JSONParser("{\"key1\": \"value\", \"key2\": \"value\"}").Parse(); // test case: PASS correctly parses multiple string key/value pairs
 
 // FAIL TESTS
-
 Console.WriteLine(divider);
 new JSONParser("   {").Parse(); // test case: FAIL unclosed bracket
 
@@ -59,8 +57,7 @@ public class JSONParser
 
     public Dictionary<string, dynamic> Parse()
     {
-        string errorMessage = "Input is not valid JSON.";
-        var invalidJSON = new Exception(errorMessage);
+        var invalidJSON = GetInvalidJSONException();
 
         if (this.input.Length == 0) throw invalidJSON;
         if (this.input[0] is not '{') throw invalidJSON;
@@ -79,6 +76,12 @@ public class JSONParser
         Console.WriteLine(ParsedJSONObjectToString(parsedJSON));
 
         return parsedJSON;
+    }
+
+    private static Exception GetInvalidJSONException()
+    {
+        string errorMessage = "Input is not valid JSON.";
+        return new Exception(errorMessage);
     }
 
     private void LoopThroughInput(Dictionary<string, dynamic> parsedJSON, Dictionary<char, short> charCounter)
