@@ -70,12 +70,17 @@ public class JSONParser
 
         FinalBracketsCheck(charCounter);
 
+        PrintParsedJSONAndCharCounter(parsedJSON, charCounter);
+
+        return parsedJSON;
+    }
+
+    private static void PrintParsedJSONAndCharCounter(Dictionary<string, dynamic> parsedJSON, Dictionary<char, short> charCounter)
+    {
         Console.WriteLine("charCounter:");
         Console.WriteLine(CharCounterToString(charCounter));
         Console.WriteLine("Parsed JSON output:");
         Console.WriteLine(ParsedJSONObjectToString(parsedJSON));
-
-        return parsedJSON;
     }
 
     private static Exception GetInvalidJSONException()
