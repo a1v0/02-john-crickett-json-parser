@@ -22,13 +22,35 @@
  *   - missing closing bracket
  */
 
-new JSONParser("   ").Parse(); // test case: FAIL empty string
+string divider = "----------------------------------------------------------------------------------------";
+
+
+// PASS TESTS
+
+Console.WriteLine(divider);
+new JSONParser("{}").Parse(); // test case: PASS empty JSON object
+
+Console.WriteLine(divider);
+new JSONParser("   {          }    ").Parse(); // test case: PASS ignores whitespace between JSON content
+
+Console.WriteLine(divider);
+new JSONParser("{\"key\": \"value\"}").Parse(); // test case: PASS correctly parses a string key/value pair
+
+Console.WriteLine(divider);
+new JSONParser("{\"key1\": \"value\", \"key2\": \"value\"}").Parse(); // test case: PASS correctly parses multiple string key/value pairs
+
+// FAIL TESTS
+
+Console.WriteLine(divider);
 new JSONParser("   {").Parse(); // test case: FAIL unclosed bracket
-new JSONParser("   {}").Parse(); // test case: PASS empty JSON object
+
+Console.WriteLine(divider);
+new JSONParser("   ").Parse(); // test case: FAIL empty string
+
 
 public class JSONParser
 {
-    public string input;
+    private string input;
 
     public JSONParser(string jsonInput)
     {
