@@ -22,6 +22,8 @@
  *   - missing closing bracket
  */
 
+using System.Text.Json.Serialization;
+
 string divider = "----------------------------------------------------------------------------------------";
 
 
@@ -95,6 +97,18 @@ public class JSONParser
 
         foreach (char c in this.input)
         {
+            // create array of functions contain methods to run in order, e.g.:
+            // [
+            //      CheckForKey,
+            //      CheckForColon,
+            //      CheckForValue,
+            //      CheckForCommaOrEnd // for nested objects to work, I reckon this one will need to know whether it's top-level or not
+            // ]
+
+
+
+
+
             // state explicitly what we are expecting (bracket, key (i.e. string), value, colon, comma etc.)
             // - this might make most sense as a string field, e.g. expecting = "comma"
             // - this way, if we're 'inside' a key, we can ignore any spaces, brackets etc.
