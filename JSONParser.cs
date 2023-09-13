@@ -48,7 +48,7 @@ new JSONParser("   ").Parse(); // test case: FAIL empty string
 
 public class JSONParser
 {
-    private string input;
+    private readonly string input;
 
     public JSONParser(string jsonInput)
     {
