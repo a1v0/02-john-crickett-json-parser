@@ -22,10 +22,7 @@
  *   - missing closing bracket
  */
 
-using System.Text.Json.Serialization;
-
 string divider = "----------------------------------------------------------------------------------------";
-
 
 // PASS TESTS
 Console.WriteLine(divider);
