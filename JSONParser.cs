@@ -55,6 +55,7 @@ public class JSONParser
     public JSONParser(string jsonInput)
     {
         input = jsonInput.Trim();
+        CurrentProgramState = 0;
     }
 
     public Dictionary<string, dynamic> Parse()
@@ -103,7 +104,9 @@ public class JSONParser
         //      CheckForCommaOrEnd // for nested objects to work, I reckon this one will need to know whether it's top-level or not. Should be doable using the CharCounter
         // ]
 
-        Action[] programState = { CheckForKey, CheckForColon, CheckForValue, CheckForCommaOrEnd };
+        Action[] programStates = { CheckForKey, CheckForColon, CheckForValue, CheckForCommaOrEnd }; // I know this variable should be a static property or similar but I can't get it to work. If you update the length of this, you need to update the CurrentProgramState property
+
+
 
         foreach (char c in this.input)
         {
@@ -230,6 +233,21 @@ public class JSONParser
         string result = String.Join(",\n", pairs.ToArray());
 
         return "{\n" + result + "\n}";
+    }
+
+    private int CurrentProgramState
+    {
+        get;
+        set;
+    }
+
+    private void UpdateCurrentProgramState()
+    {
+        ++CurrentProgramState;
+        if (CurrentProgramState > 4)
+        {
+            CurrentProgramState = 0;
+        }
     }
 }
 
