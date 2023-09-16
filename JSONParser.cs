@@ -96,20 +96,15 @@ public class JSONParser
     {
         string closingCharacters = "]}";
 
-        // create array of functions contain methods to run in order, e.g.:
-        // [
-        //      CheckForKey,
-        //      CheckForColon,
-        //      CheckForValue,
-        //      CheckForCommaOrEnd // for nested objects to work, I reckon this one will need to know whether it's top-level or not. Should be doable using the CharCounter
-        // ]
-
-        Action[] programStates = { CheckForKey, CheckForColon, CheckForValue, CheckForCommaOrEnd }; // I know this variable should be a static property or similar but I can't get it to work. If you update the length of this, you need to update the CurrentProgramState property
-
+        Action[] programStates = { ExpectKey, ExpectColon, ExpectValue, ExpectCommaOrEnd }; // I know this variable should be a static property or similar but I can't get it to work. If you update the length of this, you need to update the CurrentProgramState property
 
 
         foreach (char c in this.input)
         {
+            // create a property on the class to house the current char index we're going through
+            // each method starts looping through from the latest index and updates the value on exit
+            // - doesn't this violate the Do One Thing rule? See if you can avoid it
+
 
 
 
@@ -136,12 +131,14 @@ public class JSONParser
         }
     }
 
-    private void CheckForKey() { }
-    private void CheckForColon() { }
-    private void CheckForValue() { }
-    private void CheckForCommaOrEnd() { }
+    private void ExpectKey() { }
+    private void ExpectColon() { }
+    private void ExpectValue() { }
+    private void ExpectCommaOrEnd() {
+        // for nested objects to work, I reckon this one will need to know whether it's top-level or not. Should be doable using the CharCounter
+        }
 
-    private void CloseBrackets(char closingCharacter, Dictionary<char, short> charCounter)
+        private void CloseBrackets(char closingCharacter, Dictionary<char, short> charCounter)
     {
         char? openingCharacter = null;
 
