@@ -95,15 +95,18 @@ public class JSONParser
     {
         string closingCharacters = "]}";
 
+        // create array of functions contain methods to run in order, e.g.:
+        // [
+        //      CheckForKey,
+        //      CheckForColon,
+        //      CheckForValue,
+        //      CheckForCommaOrEnd // for nested objects to work, I reckon this one will need to know whether it's top-level or not. Should be doable using the CharCounter
+        // ]
+
+        Action[] programState = { CheckForKey, CheckForColon, CheckForValue, CheckForCommaOrEnd };
+
         foreach (char c in this.input)
         {
-            // create array of functions contain methods to run in order, e.g.:
-            // [
-            //      CheckForKey,
-            //      CheckForColon,
-            //      CheckForValue,
-            //      CheckForCommaOrEnd // for nested objects to work, I reckon this one will need to know whether it's top-level or not. Should be doable using the CharCounter
-            // ]
 
 
 
@@ -129,6 +132,11 @@ public class JSONParser
             }
         }
     }
+
+    private void CheckForKey() { }
+    private void CheckForColon() { }
+    private void CheckForValue() { }
+    private void CheckForCommaOrEnd() { }
 
     private void CloseBrackets(char closingCharacter, Dictionary<char, short> charCounter)
     {
