@@ -102,7 +102,7 @@ public class JSONParser
             //      CheckForKey,
             //      CheckForColon,
             //      CheckForValue,
-            //      CheckForCommaOrEnd // for nested objects to work, I reckon this one will need to know whether it's top-level or not
+            //      CheckForCommaOrEnd // for nested objects to work, I reckon this one will need to know whether it's top-level or not. Should be doable using the CharCounter
             // ]
 
 
