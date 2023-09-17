@@ -8,6 +8,8 @@ public class JSONParser
     {
         input = jsonInput.Trim();
         CurrentProgramState = 0;
+        CurrentCharIndex = 1;
+        ParsedJSON = new Dictionary<string, dynamic>();
     }
 
     public Dictionary<string, dynamic> Parse()
@@ -17,25 +19,23 @@ public class JSONParser
         if (this.input.Length == 0) throw invalidJSONException;
         if (this.input[0] is not '{') throw invalidJSONException;
 
-        var parsedJSON = new Dictionary<string, dynamic>();
-
         var charCounter = GetCharCounter();
 
-        LoopThroughInput(parsedJSON, charCounter);
+        LoopThroughInput(charCounter);
 
         FinalBracketsCheck(charCounter);
 
-        PrintParsedJSONAndCharCounter(parsedJSON, charCounter);
+        PrintParsedJSONAndCharCounter(charCounter);
 
-        return parsedJSON;
+        return ParsedJSON;
     }
 
-    private static void PrintParsedJSONAndCharCounter(Dictionary<string, dynamic> parsedJSON, Dictionary<char, short> charCounter)
+    private void PrintParsedJSONAndCharCounter(Dictionary<char, short> charCounter)
     {
         Console.WriteLine("charCounter:");
         Console.WriteLine(CharCounterToString(charCounter));
         Console.WriteLine("Parsed JSON output:");
-        Console.WriteLine(ParsedJSONObjectToString(parsedJSON));
+        Console.WriteLine(ParsedJSONObjectToString(ParsedJSON));
     }
 
     private static Exception GetInvalidJSONException()
@@ -44,7 +44,7 @@ public class JSONParser
         return new Exception(errorMessage);
     }
 
-    private void LoopThroughInput(Dictionary<string, dynamic> parsedJSON, Dictionary<char, short> charCounter)
+    private void LoopThroughInput(Dictionary<char, short> charCounter)
     {
         string closingCharacters = "]}";
 
@@ -191,6 +191,8 @@ public class JSONParser
     }
 
     private int CurrentCharIndex { get; set; }
+
+    private Dictionary<string, dynamic> ParsedJSON { get; }
 
     private void UpdateCurrentProgramState()
     {
