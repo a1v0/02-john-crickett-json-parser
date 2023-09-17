@@ -3,23 +3,35 @@ using System.Runtime.CompilerServices;
 
 public class JSONParser
 {
-    private readonly string input;
-
     public JSONParser(string jsonInput)
     {
-        input = jsonInput.Trim();
+        Input = jsonInput.Trim();
         ProgramStates = new Action[] { RetrieveKey, RetrieveValue, CheckForCommaOrEnd };
         CurrentProgramState = 0;
         CurrentCharIndex = 1;
         ParsedJSON = new Dictionary<string, dynamic>();
     }
 
+    // PROPERTIES -----------------------------------------------------------------------------------------------
+    private int CurrentProgramState
+    {
+        get;
+        set;
+    }
+    private int CurrentCharIndex { get; set; }
+    private Dictionary<string, dynamic> ParsedJSON { get; }
+
+    private readonly Action[] ProgramStates;
+    private readonly string Input;
+
+    // METHODS --------------------------------------------------------------------------------------------------
+
     public Dictionary<string, dynamic> Parse()
     {
         var invalidJSONException = GetInvalidJSONException();
 
-        if (this.input.Length == 0) throw invalidJSONException;
-        if (this.input[0] is not '{') throw invalidJSONException;
+        if (Input.Length == 0) throw invalidJSONException;
+        if (Input[0] is not '{') throw invalidJSONException;
 
         var charCounter = GetCharCounter();
 
@@ -48,9 +60,9 @@ public class JSONParser
 
     private void CycleThroughProgramStates(Dictionary<char, short> charCounter)
     {
-        while (CurrentCharIndex < input.Length)
+        while (CurrentCharIndex < Input.Length)
         {
-            CurrentCharIndex = input.Length; // DELETE THIS
+            CurrentCharIndex = Input.Length; // DELETE THIS
             Action currentState = ProgramStates[CurrentProgramState];
             UpdateCurrentProgramState();
 
@@ -72,7 +84,7 @@ public class JSONParser
 
 
 
-        foreach (char c in this.input)
+        foreach (char c in this.Input)
         {
             // create a property on the class to house the current char index we're going through
             // each method starts looping through from the latest index and updates the value on exit
@@ -104,7 +116,6 @@ public class JSONParser
         }
     }
 
-    private readonly Action[] ProgramStates;
 
     private void RetrieveKey() { }
     private void RetrieveValue() { }
@@ -113,7 +124,7 @@ public class JSONParser
         // for nested objects to work, I reckon this one will need to know whether it's top-level or not. Should be doable using the CharCounter
     }
 
-    private void CloseBrackets(char closingCharacter, Dictionary<char, short> charCounter)
+    private static void CloseBrackets(char closingCharacter, Dictionary<char, short> charCounter)
     {
         char? openingCharacter = null;
 
@@ -139,7 +150,7 @@ public class JSONParser
         throw new Exception(exceptionMessage);
     }
 
-    private void FinalBracketsCheck(Dictionary<char, short> charCounter)
+    private static void FinalBracketsCheck(Dictionary<char, short> charCounter)
     {
         foreach (char c in charCounter.Keys)
         {
@@ -206,17 +217,6 @@ public class JSONParser
 
         return "{\n" + result + "\n}";
     }
-
-    private int CurrentProgramState
-    {
-        get;
-        set;
-    }
-
-    private int CurrentCharIndex { get; set; }
-
-    private Dictionary<string, dynamic> ParsedJSON { get; }
-
     private void UpdateCurrentProgramState()
     {
         ++CurrentProgramState;
