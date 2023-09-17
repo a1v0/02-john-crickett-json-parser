@@ -12,10 +12,10 @@ public class JSONParser
 
     public Dictionary<string, dynamic> Parse()
     {
-        var invalidJSON = GetInvalidJSONException();
+        var invalidJSONException = GetInvalidJSONException();
 
-        if (this.input.Length == 0) throw invalidJSON;
-        if (this.input[0] is not '{') throw invalidJSON;
+        if (this.input.Length == 0) throw invalidJSONException;
+        if (this.input[0] is not '{') throw invalidJSONException;
 
         var parsedJSON = new Dictionary<string, dynamic>();
 
@@ -48,7 +48,7 @@ public class JSONParser
     {
         string closingCharacters = "]}";
 
-        Action[] programStates = { ExpectKey, ExpectColon, ExpectValue, ExpectCommaOrEnd }; // I know this variable should be a static property or similar but I can't get it to work. If you update the length of this, you need to update the CurrentProgramState property
+        Action[] programStates = { RetrieveKey, RetrieveValue, CheckForCommaOrEnd }; // I know this variable should be a static property or similar but I can't get it to work. If you update the length of this, you need to update the CurrentProgramState property
 
 
         foreach (char c in this.input)
@@ -83,10 +83,9 @@ public class JSONParser
         }
     }
 
-    private void ExpectKey() { }
-    private void ExpectColon() { }
-    private void ExpectValue() { }
-    private void ExpectCommaOrEnd()
+    private void RetrieveKey() { }
+    private void RetrieveValue() { }
+    private void CheckForCommaOrEnd()
     {
         // for nested objects to work, I reckon this one will need to know whether it's top-level or not. Should be doable using the CharCounter
     }
@@ -194,7 +193,7 @@ public class JSONParser
     private void UpdateCurrentProgramState()
     {
         ++CurrentProgramState;
-        if (CurrentProgramState > 4)
+        if (CurrentProgramState > 3)
         {
             CurrentProgramState = 0;
         }
