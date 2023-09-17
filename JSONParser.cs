@@ -1,4 +1,37 @@
-﻿using System;
+﻿// - instead of program states, just make a controller that takes the program through the key/value generation process in order
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
 using System.Runtime.CompilerServices;
 
 public class JSONParser
@@ -13,11 +46,7 @@ public class JSONParser
     }
 
     // PROPERTIES -----------------------------------------------------------------------------------------------
-    private int CurrentProgramState
-    {
-        get;
-        set;
-    }
+    private int CurrentProgramState { get; set; }
     private int CurrentCharIndex { get; set; }
     private Dictionary<string, dynamic> ParsedJSON { get; }
 
@@ -58,16 +87,19 @@ public class JSONParser
         return new Exception(errorMessage);
     }
 
+    private void PrepareDictionaryEntry() { 
+            Action currentState = ProgramStates[CurrentProgramState];
+            // need a method in this loop to store interim values, e.g. keys, before they can be set as dictionary entries
+            // it should be that method that calls the methods stored in programStates
+            UpdateCurrentProgramState();
+    }
+
     private void CycleThroughProgramStates(Dictionary<char, short> charCounter)
     {
         while (CurrentCharIndex < Input.Length)
         {
             CurrentCharIndex = Input.Length; // DELETE THIS
-            Action currentState = ProgramStates[CurrentProgramState];
-            UpdateCurrentProgramState();
-
-            // need a method in this loop to store interim values, e.g. keys, before they can be set as dictionary entries
-            // it should be that method that calls the methods stored in programStates
+            PrepareDictionaryEntry();
         }
 
 
