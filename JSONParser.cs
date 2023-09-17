@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 public class JSONParser
 {
@@ -21,7 +22,7 @@ public class JSONParser
 
         var charCounter = GetCharCounter();
 
-        LoopThroughInput(charCounter);
+        CycleThroughProgramStates(charCounter);
 
         FinalBracketsCheck(charCounter);
 
@@ -44,11 +45,32 @@ public class JSONParser
         return new Exception(errorMessage);
     }
 
-    private void LoopThroughInput(Dictionary<char, short> charCounter)
+    private void CycleThroughProgramStates(Dictionary<char, short> charCounter)
     {
+        Action[] programStates = { RetrieveKey, RetrieveValue, CheckForCommaOrEnd }; // I know this variable should be a static property or similar but I can't get it to work. If you update the length of this, you need to update the CurrentProgramState property
+
+        while (CurrentCharIndex < input.Length)
+        {
+            CurrentCharIndex = input.Length; // DELETE THIS
+            Action currentState = programStates[CurrentProgramState];
+            UpdateCurrentProgramState();
+
+            // need a method in this loop to store interim values, e.g. keys, before they can be set as dictionary entries
+// it should be that method that calls the methods stored in programStates
+        }
+
+
+
+
+
+
+
+
+
+
+
         string closingCharacters = "]}";
 
-        Action[] programStates = { RetrieveKey, RetrieveValue, CheckForCommaOrEnd }; // I know this variable should be a static property or similar but I can't get it to work. If you update the length of this, you need to update the CurrentProgramState property
 
 
         foreach (char c in this.input)
