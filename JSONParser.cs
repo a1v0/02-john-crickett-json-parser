@@ -8,6 +8,7 @@ public class JSONParser
     public JSONParser(string jsonInput)
     {
         input = jsonInput.Trim();
+        ProgramStates = new Action[] { RetrieveKey, RetrieveValue, CheckForCommaOrEnd };
         CurrentProgramState = 0;
         CurrentCharIndex = 1;
         ParsedJSON = new Dictionary<string, dynamic>();
@@ -47,16 +48,14 @@ public class JSONParser
 
     private void CycleThroughProgramStates(Dictionary<char, short> charCounter)
     {
-        Action[] programStates = { RetrieveKey, RetrieveValue, CheckForCommaOrEnd }; // I know this variable should be a static property or similar but I can't get it to work. If you update the length of this, you need to update the CurrentProgramState property
-
         while (CurrentCharIndex < input.Length)
         {
             CurrentCharIndex = input.Length; // DELETE THIS
-            Action currentState = programStates[CurrentProgramState];
+            Action currentState = ProgramStates[CurrentProgramState];
             UpdateCurrentProgramState();
 
             // need a method in this loop to store interim values, e.g. keys, before they can be set as dictionary entries
-// it should be that method that calls the methods stored in programStates
+            // it should be that method that calls the methods stored in programStates
         }
 
 
@@ -104,6 +103,8 @@ public class JSONParser
             }
         }
     }
+
+    private readonly Action[] ProgramStates;
 
     private void RetrieveKey() { }
     private void RetrieveValue() { }
@@ -219,7 +220,7 @@ public class JSONParser
     private void UpdateCurrentProgramState()
     {
         ++CurrentProgramState;
-        if (CurrentProgramState > 3)
+        if (CurrentProgramState >= ProgramStates.Length)
         {
             CurrentProgramState = 0;
         }
