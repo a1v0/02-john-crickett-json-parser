@@ -190,6 +190,8 @@ public class JSONParser
         set;
     }
 
+    private int CurrentCharIndex { get; set; }
+
     private void UpdateCurrentProgramState()
     {
         ++CurrentProgramState;
