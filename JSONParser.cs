@@ -81,29 +81,38 @@ public class JSONParser
         return new Exception(errorMessage);
     }
 
-    private void PrepareDictionaryEntry() { 
-            // need a method in this loop to store interim values, e.g. keys, before they can be set as dictionary entries
-            // it should be that method that calls the methods stored in programStates
-    }
-
     private void ParseKeyValuePairs(Dictionary<char, short> charCounter)
     {
         while (CurrentCharIndex < Input.Length)
         {
             CurrentCharIndex = Input.Length; // DELETE THIS
-            PrepareDictionaryEntry();
+
+            string key = RetrieveKey();
+            //
+            //
+            // what if there's no key, just a closing }, e.g. in an empty object?
+            //
+            //
+            //
+            //
+            //
+
+            // check for colon
+            // retrieve value
+            // add pair to JSON
+            // check whether there's another pair or whether to end the program
         }
 
 
 
 
 
-
-
-
-
-
-
+        //
+        //
+        //
+        // the below can be deleted later
+        //
+        //
         string closingCharacters = "]}";
 
 
@@ -141,11 +150,25 @@ public class JSONParser
     }
 
 
-    private void RetrieveKey() { }
+    private string RetrieveKey()
+    {
+        return ParseString();
+    }
+    private void CheckForColon() { }
     private void RetrieveValue() { }
     private void CheckForCommaOrEnd()
     {
         // for nested objects to work, I reckon this one will need to know whether it's top-level or not. Should be doable using the CharCounter
+    }
+
+    private string ParseString()
+    {
+        // for loop through input
+        // ignore spaces before "
+        // expect "
+        // find way to ignore escaped " characters
+        // 
+        return "";
     }
 
     private static void CloseBrackets(char closingCharacter, Dictionary<char, short> charCounter)
