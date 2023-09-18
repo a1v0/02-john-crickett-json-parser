@@ -39,22 +39,16 @@ public class JSONParser
     public JSONParser(string jsonInput)
     {
         Input = jsonInput.Trim();
-        ProgramStates = new Action[] { RetrieveKey, RetrieveValue, CheckForCommaOrEnd };
-        CurrentProgramState = 0;
         CurrentCharIndex = 1;
         ParsedJSON = new Dictionary<string, dynamic>();
     }
 
     // PROPERTIES -----------------------------------------------------------------------------------------------
-    private int CurrentProgramState { get; set; }
+    private readonly string Input;
     private int CurrentCharIndex { get; set; }
     private Dictionary<string, dynamic> ParsedJSON { get; }
 
-    private readonly Action[] ProgramStates;
-    private readonly string Input;
-
     // METHODS --------------------------------------------------------------------------------------------------
-
     public Dictionary<string, dynamic> Parse()
     {
         var invalidJSONException = GetInvalidJSONException();
@@ -64,7 +58,7 @@ public class JSONParser
 
         var charCounter = GetCharCounter();
 
-        CycleThroughProgramStates(charCounter);
+        ParseKeyValuePairs(charCounter);
 
         FinalBracketsCheck(charCounter);
 
@@ -88,13 +82,11 @@ public class JSONParser
     }
 
     private void PrepareDictionaryEntry() { 
-            Action currentState = ProgramStates[CurrentProgramState];
             // need a method in this loop to store interim values, e.g. keys, before they can be set as dictionary entries
             // it should be that method that calls the methods stored in programStates
-            UpdateCurrentProgramState();
     }
 
-    private void CycleThroughProgramStates(Dictionary<char, short> charCounter)
+    private void ParseKeyValuePairs(Dictionary<char, short> charCounter)
     {
         while (CurrentCharIndex < Input.Length)
         {
@@ -248,13 +240,5 @@ public class JSONParser
         string result = String.Join(",\n", pairs.ToArray());
 
         return "{\n" + result + "\n}";
-    }
-    private void UpdateCurrentProgramState()
-    {
-        ++CurrentProgramState;
-        if (CurrentProgramState >= ProgramStates.Length)
-        {
-            CurrentProgramState = 0;
-        }
     }
 }
