@@ -54,8 +54,6 @@ public class JSONParser
         {
             CurrentCharIndex = Input.Length; // DELETE THIS
 
-            string key = RetrieveKey();
-            CheckForColon();
             //
             //
             // what if there's no key, just a closing }, e.g. in an empty object?
@@ -64,8 +62,9 @@ public class JSONParser
             //
             //
             //
+            string key = RetrieveKey();
 
-            // check for colon
+            CheckForColon();
             // retrieve value
             // add pair to JSON
             // check whether there's another pair or whether to end the program
@@ -85,7 +84,7 @@ public class JSONParser
 
 
 
-        foreach (char c in this.Input)
+        foreach (char c in Input)
         {
             // create a property on the class to house the current char index we're going through
             // each method starts looping through from the latest index and updates the value on exit
