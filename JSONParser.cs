@@ -65,7 +65,7 @@ public class JSONParser
             string key = RetrieveKey();
 
             CheckForColon();
-            // retrieve value
+            dynamic value = RetrieveValue();
             // add pair to JSON
             // check whether there's another pair or whether to end the program
         }
@@ -127,7 +127,10 @@ public class JSONParser
         if (Input[CurrentCharIndex] is not ':') throw InvalidJSONException;
         ++CurrentCharIndex;
     }
-    private void RetrieveValue() { }
+    private dynamic RetrieveValue()
+    {
+        return "";
+    }
     private void CheckForCommaOrEnd()
     {
         // for nested objects to work, I reckon this one will need to know whether it's top-level or not. Should be doable using the CharCounter
