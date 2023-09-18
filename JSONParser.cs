@@ -1,37 +1,4 @@
-﻿// - instead of program states, just make a controller that takes the program through the key/value generation process in order
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
 
 public class JSONParser
