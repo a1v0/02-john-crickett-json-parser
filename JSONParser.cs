@@ -88,6 +88,7 @@ public class JSONParser
             CurrentCharIndex = Input.Length; // DELETE THIS
 
             string key = RetrieveKey();
+            CheckForColon();
             //
             //
             // what if there's no key, just a closing }, e.g. in an empty object?
@@ -154,7 +155,12 @@ public class JSONParser
     {
         return ParseString();
     }
-    private void CheckForColon() { }
+    private void CheckForColon()
+    {
+        SkipToNextNonSpaceChar();
+        if (Input[CurrentCharIndex] is not ':') throw InvalidJSONException;
+        ++CurrentCharIndex;
+    }
     private void RetrieveValue() { }
     private void CheckForCommaOrEnd()
     {
