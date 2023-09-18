@@ -163,24 +163,32 @@ public class JSONParser
 
     private string ParseString()
     {
-        // for loop through input
-        // ignore spaces before "
-        // expect "
-        // find way to ignore escaped " characters
-        // 
         SkipToNextNonSpaceChar();
 
         if (Input[CurrentCharIndex] is not '"') throw InvalidJSONException;
+        ++CurrentCharIndex;
 
         string value = "";
 
         for (int i = CurrentCharIndex; i < Input.Length; ++i)
         {
-            char c = Input[i];
             CurrentCharIndex = i;
+
+            char c = Input[i];
+            if (c is '"') break;
+
+            value += c;
+
+            if (c is '\\')
+            {
+                value += Input[i + 1]; // POTENTIAL EDGE CASE: this line could through a range error when given invalid JSON. Would be better to throw an invalid JSON exception
+                ++i;
+            }
         }
 
-        return "";
+        if (value is "") throw InvalidJSONException;
+
+        return value;
     }
 
     private void SkipToNextNonSpaceChar()
