@@ -119,7 +119,9 @@ public class JSONParser
 
     private string RetrieveKey()
     {
-        return ParseString();
+        string key = RetrieveKey();
+        if (key is "") throw InvalidJSONException;
+        return key;
     }
     private void CheckForColon()
     {
@@ -160,8 +162,6 @@ public class JSONParser
                 ++i;
             }
         }
-
-        if (value is "") throw InvalidJSONException;
 
         return value;
     }
