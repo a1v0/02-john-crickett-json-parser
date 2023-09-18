@@ -41,20 +41,20 @@ public class JSONParser
         Input = jsonInput.Trim();
         CurrentCharIndex = 1;
         ParsedJSON = new Dictionary<string, dynamic>();
+        InvalidJSONException = GetInvalidJSONException();
     }
 
     // PROPERTIES -----------------------------------------------------------------------------------------------
     private readonly string Input;
     private int CurrentCharIndex { get; set; }
     private Dictionary<string, dynamic> ParsedJSON { get; }
+    private readonly Exception InvalidJSONException;
 
     // METHODS --------------------------------------------------------------------------------------------------
     public Dictionary<string, dynamic> Parse()
     {
-        var invalidJSONException = GetInvalidJSONException();
-
-        if (Input.Length == 0) throw invalidJSONException;
-        if (Input[0] is not '{') throw invalidJSONException;
+        if (Input.Length == 0) throw InvalidJSONException;
+        if (Input[0] is not '{') throw InvalidJSONException;
 
         var charCounter = GetCharCounter();
 
@@ -168,7 +168,31 @@ public class JSONParser
         // expect "
         // find way to ignore escaped " characters
         // 
+        SkipToNextNonSpaceChar();
+
+        if (Input[CurrentCharIndex] is not '"') throw InvalidJSONException;
+
+        string value = "";
+
+        for (int i = CurrentCharIndex; i < Input.Length; ++i)
+        {
+            char c = Input[i];
+            CurrentCharIndex = i;
+        }
+
         return "";
+    }
+
+    private void SkipToNextNonSpaceChar()
+    {
+        string spaces = " \n\r";
+
+        for (int i = CurrentCharIndex; i < Input.Length; ++i)
+        {
+            CurrentCharIndex = i;
+            char c = Input[i];
+            if (!spaces.Contains(c)) break;
+        }
     }
 
     private static void CloseBrackets(char closingCharacter, Dictionary<char, short> charCounter)
