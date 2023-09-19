@@ -155,25 +155,48 @@ public class JSONParser
         // for nested objects to work, I reckon this one will need to know whether it's top-level or not. Should be doable using the CharCounter
     }
 
+    private bool ParseTrue()
+    {
+        return true;
+    }
 
-    private bool ParseTrue() { }
-    private bool ParseFalse() { }
-    private bool? ParseNull() { }
+    private bool ParseFalse()
+    {
+        return false;
+    }
+
+    private bool? ParseNull()
+    {
+        return null;
+    }
+
     private dynamic ParseNumber()
     {
         // check for negative number and multiply by -1 before returning
+        return 0;
     }
+
     private int ParseInteger()
     {
         // should I allow for the maximum number size?
+        return 0;
     }
+
     private float ParseFloatingPoint()
     {
         // should I allow for the maximum number size?
+        return 0;
     }
-    private List<dynamic> ParseArray() { }
 
-    private Dictionary<string, dynamic> ParseObject() { }
+    private List<dynamic> ParseArray()
+    {
+        return new List<dynamic>();
+    }
+
+    private Dictionary<string, dynamic> ParseObject()
+    {
+        return new Dictionary<string, dynamic>();
+    }
 
     private string ParseString()
     {
