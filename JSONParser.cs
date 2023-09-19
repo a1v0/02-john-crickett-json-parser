@@ -46,6 +46,8 @@ public class JSONParser
 
     private void ParseKeyValuePairs()
     {
+        ++OpenBraces;
+
         while (CurrentCharIndex < Input.Length)
         {
             // potential refactor: instead of looping until the Input is over, run this loop using the CharCounter and then, once the loop is complete, check to ensure that there are no further characters at the end of the Input
@@ -108,7 +110,7 @@ public class JSONParser
             case ',':
                 break;
             case '}':
-                // update CharCounter here
+                --OpenBraces;
                 break;
             default:
                 throw InvalidJSONException;
