@@ -48,7 +48,9 @@ public class JSONParser
     {
         ++OpenBraces;
 
-        while (CurrentCharIndex < Input.Length)
+        int noOfOpenBracesAtStart = OpenBraces;
+
+        while (OpenBraces >= noOfOpenBracesAtStart)
         {
             // potential refactor: instead of looping until the Input is over, run this loop using the CharCounter and then, once the loop is complete, check to ensure that there are no further characters at the end of the Input
             CurrentCharIndex = Input.Length; // DELETE THIS
