@@ -1,7 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-
-public class JSONParser
+﻿public class JSONParser
 {
     public JSONParser(string jsonInput)
     {
