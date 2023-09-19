@@ -9,7 +9,7 @@ public class JSONParser
         CurrentCharIndex = 1;
         ParsedJSON = new Dictionary<string, dynamic>();
         InvalidJSONException = GetInvalidJSONException();
-        CharCounter = GetCharCounter();
+        OpenBraces = 0;
     }
 
     // PROPERTIES -----------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@ public class JSONParser
     private int CurrentCharIndex { get; set; }
     private Dictionary<string, dynamic> ParsedJSON;
     private readonly Exception InvalidJSONException;
-    private readonly Dictionary<char, short> CharCounter;
+    private int OpenBraces { get; set; }
 
     // METHODS --------------------------------------------------------------------------------------------------
     public Dictionary<string, dynamic> Parse()
@@ -27,17 +27,13 @@ public class JSONParser
 
         ParseKeyValuePairs();
 
-        CheckAllBracketsAreClosed();
-
-        PrintParsedJSONAndCharCounter();
+        PrintParsedJSON();
 
         return ParsedJSON;
     }
 
-    private void PrintParsedJSONAndCharCounter()
+    private void PrintParsedJSON()
     {
-        Console.WriteLine("CharCounter:");
-        Console.WriteLine(CharCounterToString());
         Console.WriteLine("Parsed JSON output:");
         Console.WriteLine(ParsedJSONObjectToString(ParsedJSON));
     }
@@ -69,53 +65,7 @@ public class JSONParser
             ParsedJSON.Add(key, value);
             CheckForCommaOrEnd();
         }
-
-
-
-
-
-        //
-        //
-        //
-        // the below can be deleted later
-        //
-        //
-        string closingCharacters = "]}";
-
-
-
-        foreach (char c in Input)
-        {
-            // create a property on the class to house the current char index we're going through
-            // each method starts looping through from the latest index and updates the value on exit
-            // - doesn't this violate the Do One Thing rule? See if you can avoid it
-
-
-
-
-
-
-            // state explicitly what we are expecting (bracket, key (i.e. string), value, colon, comma etc.)
-            // - this might make most sense as a string field, e.g. expecting = "comma"
-            // - this way, if we're 'inside' a key, we can ignore any spaces, brackets etc.
-            // use a switch statement to control the logic (e.g. if we're expectinng a key, go to method FindKey or something)
-            // foreach might not be appropriate, because it might make more sense for the individual methods to update the character we're working on. As such, a conventional for loop, wherein we can update the position of c, might be more sensible
-            // might also need some sort of recursion for nested objects.
-            // - perhaps, therefore, I need to investigate using substrings, identifying where the closing bracket is before I parse it
-
-            if (CharCounter.ContainsKey(c))
-            {
-                // this will need refactoring/expanding for " characters, where the opening and closing char looks the same
-                ++CharCounter[c];
-            }
-
-            if (closingCharacters.Contains(c))
-            {
-                CloseBrackets(c);
-            }
-        }
     }
-
 
     private string RetrieveKey()
     {
@@ -250,78 +200,6 @@ public class JSONParser
         }
     }
 
-    private void CloseBrackets(char closingCharacter)
-    {
-        char? openingCharacter = null;
-
-        switch (closingCharacter)
-        {
-            case '}':
-                openingCharacter = '{';
-                break;
-            case ']':
-                openingCharacter = '[';
-                break;
-            default:
-                break;
-        }
-
-        if (!openingCharacter.HasValue) throw new Exception();
-
-        // so long as the number of open brackets doesn't go below 0, all is well
-        short newValue = --CharCounter[(char)openingCharacter];
-        if (newValue >= 0) return;
-
-        string exceptionMessage = String.Format("Paired Character Exception: could not parse input because of either a missing or superfluous '{0}' character.", openingCharacter);
-        throw new Exception(exceptionMessage);
-    }
-
-    private void CheckAllBracketsAreClosed()
-    {
-        foreach (char c in CharCounter.Keys)
-        {
-            if (CharCounter[c] != 0)
-            {
-                string exceptionMessage = String.Format("Paired Character Exception: could not parse input because of missing partner to an unclosed '{0}' character.", c);
-                throw new Exception(exceptionMessage);
-            }
-        }
-    }
-
-    private static Dictionary<char, short> GetCharCounter()
-    {
-        var charCounter = new Dictionary<char, short>();
-
-        string chars = "{[\"";
-        foreach (char i in chars)
-        {
-            charCounter.Add(i, 0);
-        }
-
-        return charCounter;
-    }
-
-    private string CharCounterToString()
-    {
-        var pairs = new List<string>();
-
-        foreach (KeyValuePair<char, short> keyValuePair in CharCounter)
-        {
-            string type = keyValuePair.Key.GetType().Name;
-            string key = keyValuePair.Key.ToString();
-            string value = keyValuePair.Value.ToString();
-
-            string pair = string.Format("    {0} {1}: {2}", type, key, value);
-
-            pairs.Add(pair);
-        }
-
-        string result = String.Join(",\n", pairs.ToArray());
-
-        return "{\n" + result + "\n}";
-    }
-
-    // this needs a better name to make it clearly distinct from the Stringify method
     private static string ParsedJSONObjectToString(Dictionary<string, dynamic> dictionary)
     {
         var pairs = new List<string>();
