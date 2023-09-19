@@ -131,12 +131,49 @@ public class JSONParser
     }
     private dynamic RetrieveValue()
     {
-        return "";
+        SkipToNextNonSpaceChar();
+        switch (Input[CurrentCharIndex])
+        {
+            case '"':
+                return ParseString();
+            case 't':
+                return ParseTrue();
+            case 'f':
+                return ParseFalse();
+            case 'n':
+                return ParseNull();
+            case '{':
+                return ParseObject();
+            case '[':
+                return ParseArray();
+            default:
+                return ParseNumber();
+        }
     }
     private void CheckForCommaOrEnd()
     {
         // for nested objects to work, I reckon this one will need to know whether it's top-level or not. Should be doable using the CharCounter
     }
+
+
+    private bool ParseTrue() { }
+    private bool ParseFalse() { }
+    private bool? ParseNull() { }
+    private dynamic ParseNumber()
+    {
+        // check for negative number and multiply by -1 before returning
+    }
+    private int ParseInteger()
+    {
+        // should I allow for the maximum number size?
+    }
+    private float ParseFloatingPoint()
+    {
+        // should I allow for the maximum number size?
+    }
+    private List<dynamic> ParseArray() { }
+
+    private Dictionary<string, dynamic> ParseObject() { }
 
     private string ParseString()
     {
