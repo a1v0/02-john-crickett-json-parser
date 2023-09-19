@@ -14,8 +14,9 @@ public class JSONParser
     // PROPERTIES -----------------------------------------------------------------------------------------------
     private readonly string Input;
     private int CurrentCharIndex { get; set; }
-    private Dictionary<string, dynamic> ParsedJSON { get; }
+    private Dictionary<string, dynamic> ParsedJSON;
     private readonly Exception InvalidJSONException;
+    private readonly Dictionary<char, short> CharCounter;
 
     // METHODS --------------------------------------------------------------------------------------------------
     public Dictionary<string, dynamic> Parse()
@@ -119,7 +120,7 @@ public class JSONParser
 
     private string RetrieveKey()
     {
-        string key = RetrieveKey();
+        string key = ParseString();
         if (key is "") throw InvalidJSONException;
         return key;
     }
