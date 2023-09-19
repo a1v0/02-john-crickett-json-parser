@@ -52,6 +52,7 @@ public class JSONParser
     {
         while (CurrentCharIndex < Input.Length)
         {
+            // potential refactor: instead of looping until the Input is over, run this loop using the charCounter and then, once the loop is complete, check to ensure that there are no further characters at the end of the Input
             CurrentCharIndex = Input.Length; // DELETE THIS
 
             //
@@ -151,7 +152,7 @@ public class JSONParser
     }
     private void CheckForCommaOrEnd()
     {
-        // for nested objects to work, I reckon this one will need to know whether it's top-level or not. Should be doable using the CharCounter
+        // this needs provisions made for the fact that we may be inside a nested object
     }
 
     private bool ParseTrue()
@@ -194,6 +195,7 @@ public class JSONParser
 
     private Dictionary<string, dynamic> ParseObject()
     {
+        // this one should take a charCounter and have a while loop that loops until the number of open brackets is back to what it was before the loop began, but should otherwise follow the same process as the global while loop that loops until the text is exhausted
         return new Dictionary<string, dynamic>();
     }
 
