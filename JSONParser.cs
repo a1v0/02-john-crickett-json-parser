@@ -152,7 +152,18 @@ public class JSONParser
     }
     private void CheckForCommaOrEnd()
     {
-        // this needs provisions made for the fact that we may be inside a nested object
+        SkipToNextNonSpaceChar();
+        switch (Input[CurrentCharIndex])
+        {
+            case ',':
+                break;
+            case '}':
+                // update charCounter here
+                break;
+            default: 
+                throw InvalidJSONException;
+        }
+        ++CurrentCharIndex;
     }
 
     private bool ParseTrue()
