@@ -9,6 +9,7 @@ public class JSONParser
         CurrentCharIndex = 1;
         ParsedJSON = new Dictionary<string, dynamic>();
         InvalidJSONException = GetInvalidJSONException();
+        CharCounter = GetCharCounter();
     }
 
     // PROPERTIES -----------------------------------------------------------------------------------------------
@@ -24,21 +25,19 @@ public class JSONParser
         if (Input.Length == 0) throw InvalidJSONException;
         if (Input[0] is not '{') throw InvalidJSONException;
 
-        var charCounter = GetCharCounter();
+        ParseKeyValuePairs();
 
-        ParseKeyValuePairs(charCounter);
+        FinalBracketsCheck();
 
-        FinalBracketsCheck(charCounter);
-
-        PrintParsedJSONAndCharCounter(charCounter);
+        PrintParsedJSONAndCharCounter();
 
         return ParsedJSON;
     }
 
-    private void PrintParsedJSONAndCharCounter(Dictionary<char, short> charCounter)
+    private void PrintParsedJSONAndCharCounter()
     {
-        Console.WriteLine("charCounter:");
-        Console.WriteLine(CharCounterToString(charCounter));
+        Console.WriteLine("CharCounter:");
+        Console.WriteLine(CharCounterToString());
         Console.WriteLine("Parsed JSON output:");
         Console.WriteLine(ParsedJSONObjectToString(ParsedJSON));
     }
@@ -49,11 +48,11 @@ public class JSONParser
         return new Exception(errorMessage);
     }
 
-    private void ParseKeyValuePairs(Dictionary<char, short> charCounter)
+    private void ParseKeyValuePairs()
     {
         while (CurrentCharIndex < Input.Length)
         {
-            // potential refactor: instead of looping until the Input is over, run this loop using the charCounter and then, once the loop is complete, check to ensure that there are no further characters at the end of the Input
+            // potential refactor: instead of looping until the Input is over, run this loop using the CharCounter and then, once the loop is complete, check to ensure that there are no further characters at the end of the Input
             CurrentCharIndex = Input.Length; // DELETE THIS
 
             //
@@ -104,15 +103,15 @@ public class JSONParser
             // might also need some sort of recursion for nested objects.
             // - perhaps, therefore, I need to investigate using substrings, identifying where the closing bracket is before I parse it
 
-            if (charCounter.ContainsKey(c))
+            if (CharCounter.ContainsKey(c))
             {
                 // this will need refactoring/expanding for " characters, where the opening and closing char looks the same
-                ++charCounter[c];
+                ++CharCounter[c];
             }
 
             if (closingCharacters.Contains(c))
             {
-                CloseBrackets(c, charCounter);
+                CloseBrackets(c);
             }
         }
     }
@@ -159,9 +158,9 @@ public class JSONParser
             case ',':
                 break;
             case '}':
-                // update charCounter here
+                // update CharCounter here
                 break;
-            default: 
+            default:
                 throw InvalidJSONException;
         }
         ++CurrentCharIndex;
@@ -207,7 +206,7 @@ public class JSONParser
 
     private Dictionary<string, dynamic> ParseObject()
     {
-        // this one should take a charCounter and have a while loop that loops until the number of open brackets is back to what it was before the loop began, but should otherwise follow the same process as the global while loop that loops until the text is exhausted
+        // this one should take a CharCounter and have a while loop that loops until the number of open brackets is back to what it was before the loop began, but should otherwise follow the same process as the global while loop that loops until the text is exhausted
         return new Dictionary<string, dynamic>();
     }
 
@@ -251,7 +250,7 @@ public class JSONParser
         }
     }
 
-    private static void CloseBrackets(char closingCharacter, Dictionary<char, short> charCounter)
+    private void CloseBrackets(char closingCharacter)
     {
         char? openingCharacter = null;
 
@@ -270,18 +269,18 @@ public class JSONParser
         if (!openingCharacter.HasValue) throw new Exception();
 
         // so long as the number of open brackets doesn't go below 0, all is well
-        short newValue = --charCounter[(char)openingCharacter];
+        short newValue = --CharCounter[(char)openingCharacter];
         if (newValue >= 0) return;
 
         string exceptionMessage = String.Format("Paired Character Exception: could not parse input because of either a missing or superfluous '{0}' character.", openingCharacter);
         throw new Exception(exceptionMessage);
     }
 
-    private static void FinalBracketsCheck(Dictionary<char, short> charCounter)
+    private void FinalBracketsCheck()
     {
-        foreach (char c in charCounter.Keys)
+        foreach (char c in CharCounter.Keys)
         {
-            if (charCounter[c] != 0)
+            if (CharCounter[c] != 0)
             {
                 string exceptionMessage = String.Format("Paired Character Exception: could not parse input because of missing partner to an unclosed '{0}' character.", c);
                 throw new Exception(exceptionMessage);
@@ -302,11 +301,11 @@ public class JSONParser
         return charCounter;
     }
 
-    private static string CharCounterToString(Dictionary<char, short> dictionary)
+    private string CharCounterToString()
     {
         var pairs = new List<string>();
 
-        foreach (KeyValuePair<char, short> keyValuePair in dictionary)
+        foreach (KeyValuePair<char, short> keyValuePair in CharCounter)
         {
             string type = keyValuePair.Key.GetType().Name;
             string key = keyValuePair.Key.ToString();
