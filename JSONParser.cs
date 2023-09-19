@@ -63,11 +63,10 @@ public class JSONParser
             //
             //
             string key = RetrieveKey();
-
             CheckForColon();
             dynamic value = RetrieveValue();
-            // add pair to JSON
-            // check whether there's another pair or whether to end the program
+            ParsedJSON.Add(key, value);
+            CheckForCommaOrEnd();
         }
 
 
