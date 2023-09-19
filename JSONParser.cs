@@ -27,7 +27,7 @@ public class JSONParser
 
         ParseKeyValuePairs();
 
-        FinalBracketsCheck();
+        CheckAllBracketsAreClosed();
 
         PrintParsedJSONAndCharCounter();
 
@@ -276,7 +276,7 @@ public class JSONParser
         throw new Exception(exceptionMessage);
     }
 
-    private void FinalBracketsCheck()
+    private void CheckAllBracketsAreClosed()
     {
         foreach (char c in CharCounter.Keys)
         {
