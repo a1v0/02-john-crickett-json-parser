@@ -129,7 +129,13 @@
 
     private bool ParseFalse()
     {
-        return false;
+        string nextFiveLetters = Input.Substring(CurrentCharIndex, 5);
+        if (nextFiveLetters is "false")
+        {
+            CurrentCharIndex += 5;
+            return false;
+        }
+        throw InvalidJSONException;
     }
 
     private bool? ParseNull()
