@@ -158,7 +158,7 @@ public class JSONParser
     {
         string extractedNumber = "";
         bool isFloat = false;
-        
+
         string validNumberCharacters = "0123456789-.";
         string validEndCharacters = " ]},";
 
