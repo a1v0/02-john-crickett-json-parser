@@ -118,7 +118,9 @@
 
     private bool ParseTrue()
     {
-        return true;
+        string nextFourLetters = Input.Substring(CurrentCharIndex, 4);
+        if (nextFourLetters is "true") return true;
+        throw InvalidJSONException;
     }
 
     private bool ParseFalse()
