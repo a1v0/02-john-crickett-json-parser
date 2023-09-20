@@ -53,6 +53,7 @@ Console.WriteLine(divider);
 PrintHeadingForPassTest("correctly parses null values");
 new JSONParser("{\"key1\": null, \"key2\": false  }").Parse();
 
+// --------------------------------------------------------------------------------------------------------------------
 // FAIL TESTS
 Console.WriteLine(divider);
 PrintHeadingForFailTest("recognises unclosed brace");
