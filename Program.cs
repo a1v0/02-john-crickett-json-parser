@@ -26,52 +26,52 @@ string divider = "--------------------------------------------------------------
 
 // PASS TESTS
 Console.WriteLine(divider);
-WriteInGreen("empty JSON object");
+PrintHeadingForPassTest("empty JSON object");
 new JSONParser("{}").Parse();
 
 Console.WriteLine(divider);
-WriteInGreen("ignores whitespace between JSON content");
+PrintHeadingForPassTest("ignores whitespace between JSON content");
 new JSONParser("   {          }    ").Parse();
 
 Console.WriteLine(divider);
-WriteInGreen("correctly parses a string key/value pair");
+PrintHeadingForPassTest("correctly parses a string key/value pair");
 new JSONParser("{\"key\": \"value\"}").Parse();
 
 Console.WriteLine(divider);
-WriteInGreen("correctly parses multiple string key/value pairs");
+PrintHeadingForPassTest("correctly parses multiple string key/value pairs");
 new JSONParser("{\"key1\": \"value\", \"key2\": \"value\"}").Parse();
 
 Console.WriteLine(divider);
-WriteInGreen("correctly parses multiple string key/value pairs");
+PrintHeadingForPassTest("correctly parses multiple string key/value pairs");
 new JSONParser("{\n\"key1\": \n\"value\", \r\"key2\":\n\r \"value\"}").Parse();
 
 Console.WriteLine(divider);
-WriteInGreen("correctly parses Boolean values");
+PrintHeadingForPassTest("correctly parses Boolean values");
 new JSONParser("{\"key1\": true, \"key2\": false}").Parse();
 
 Console.WriteLine(divider);
-WriteInGreen("correctly parses null values");
+PrintHeadingForPassTest("correctly parses null values");
 new JSONParser("{\"key1\": null, \"key2\": false  }").Parse();
 
 // FAIL TESTS
 Console.WriteLine(divider);
-WriteInRed("recognises unclosed brace");
+PrintHeadingForFailTest("recognises unclosed brace");
 new JSONParser("   {").Parse();
 
 Console.WriteLine(divider);
-WriteInRed("recognises empty string");
+PrintHeadingForFailTest("recognises empty string");
 new JSONParser("   ").Parse();
 
-static void WriteInGreen(string message)
+static void PrintHeadingForPassTest(string message)
 {
     Console.ForegroundColor = ConsoleColor.Green;
-    Console.WriteLine(message);
+    Console.WriteLine("PASS: " + message);
     Console.ForegroundColor = ConsoleColor.White;
 }
 
-static void WriteInRed(string message)
+static void PrintHeadingForFailTest(string message)
 {
     Console.ForegroundColor = ConsoleColor.Red;
-    Console.WriteLine(message);
+    Console.WriteLine("FAIL: " + message);
     Console.ForegroundColor = ConsoleColor.White;
 }
