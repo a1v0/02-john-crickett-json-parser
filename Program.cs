@@ -26,6 +26,7 @@ string divider = "--------------------------------------------------------------
 
 // PASS TESTS
 Console.WriteLine(divider);
+WriteInGreen("boobies!");
 new JSONParser("{}").Parse(); // test case: PASS empty JSON object
 
 Console.WriteLine(divider);
@@ -52,3 +53,10 @@ new JSONParser("   {").Parse(); // test case: FAIL unclosed bracket
 
 Console.WriteLine(divider);
 new JSONParser("   ").Parse(); // test case: FAIL empty string
+
+static void WriteInGreen(string message)
+{
+    Console.ForegroundColor= ConsoleColor.Green;
+    Console.WriteLine(message);
+    Console.ForegroundColor= ConsoleColor.White;
+}
