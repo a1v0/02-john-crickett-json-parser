@@ -37,6 +37,9 @@ new JSONParser("{\"key\": \"value\"}").Parse(); // test case: PASS correctly par
 Console.WriteLine(divider);
 new JSONParser("{\"key1\": \"value\", \"key2\": \"value\"}").Parse(); // test case: PASS correctly parses multiple string key/value pairs
 
+Console.WriteLine(divider);
+new JSONParser("{\"key1\": true, \"key2\": false}").Parse(); // test case: PASS correctly parses Boolean values
+
 // FAIL TESTS
 Console.WriteLine(divider);
 new JSONParser("   {").Parse(); // test case: FAIL unclosed bracket
