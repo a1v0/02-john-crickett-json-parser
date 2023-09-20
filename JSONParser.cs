@@ -47,10 +47,11 @@
 
         int noOfOpenBracesAtStart = OpenBraces;
 
+        CheckForEmptyObject();
+
         while (OpenBraces >= noOfOpenBracesAtStart)
         {
             // potential refactor: instead of looping until the Input is over, run this loop using the CharCounter and then, once the loop is complete, check to ensure that there are no further characters at the end of the Input
-            CurrentCharIndex = Input.Length; // DELETE THIS
 
             //
             //
@@ -66,6 +67,12 @@
             ParsedJSON.Add(key, value);
             CheckForCommaOrEnd();
         }
+    }
+
+    private void CheckForEmptyObject()
+    {
+        SkipToNextNonSpaceChar();
+        if (Input[CurrentCharIndex] is '}') --OpenBraces;
     }
 
     private string RetrieveKey()
