@@ -1,4 +1,6 @@
-﻿public class JSONParser
+﻿using System.Reflection.Metadata.Ecma335;
+
+public class JSONParser
 {
     public JSONParser(string jsonInput)
     {
@@ -154,20 +156,44 @@
 
     private dynamic ParseNumber()
     {
-        // check for negative number and multiply by -1 before returning
-        return 0;
+        string extractedNumber = "";
+        bool isFloat = false;
+        
+        string validNumberCharacters = "0123456789-.";
+        string validEndCharacters = " ]},";
+
+        for (int i = CurrentCharIndex; i < Input.Length; ++i)
+        {
+            CurrentCharIndex = i;
+
+            char c = Input[i];
+            if (validEndCharacters.Contains(c)) break;
+            if (!validNumberCharacters.Contains(c)) throw InvalidJSONException;
+            if (c is '.') isFloat = true;
+
+            extractedNumber += c;
+        }
+
+        if (isFloat) return ParseFloatingPoint(extractedNumber);
+        return ParseInteger(extractedNumber);
     }
 
-    private int ParseInteger()
+    private int ParseInteger(string number)
     {
-        // should I allow for the maximum number size?
-        return 0;
+        bool successfulConversion = int.TryParse(number, out int result);
+
+        if (!successfulConversion) throw InvalidJSONException;
+
+        return result;
     }
 
-    private float ParseFloatingPoint()
+    private float ParseFloatingPoint(string number)
     {
-        // should I allow for the maximum number size?
-        return 0;
+        bool successfulConversion = float.TryParse(number, out float result);
+
+        if (!successfulConversion) throw InvalidJSONException;
+
+        return result;
     }
 
     private List<dynamic> ParseArray()
