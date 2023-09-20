@@ -41,7 +41,7 @@ public class JSONParser
 
     private static Exception GetInvalidJSONException()
     {
-        string errorMessage = "Input is not valid JSON.";
+        const string errorMessage = "Input is not valid JSON.";
         return new Exception(errorMessage);
     }
 
@@ -159,8 +159,8 @@ public class JSONParser
         string extractedNumber = "";
         bool isFloat = false;
 
-        string validNumberCharacters = "0123456789-.";
-        string validEndCharacters = " ]},";
+        const string validNumberCharacters = "0123456789-.";
+        const string validEndCharacters = " ]},";
 
         for (int i = CurrentCharIndex; i < Input.Length; ++i)
         {
@@ -238,7 +238,7 @@ public class JSONParser
 
     private void SkipToNextNonSpaceChar()
     {
-        string spaces = " \n\r";
+        const string spaces = " \n\r";
 
         for (int i = CurrentCharIndex; i < Input.Length; ++i)
         {
