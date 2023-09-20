@@ -185,6 +185,7 @@
             }
         }
 
+        ++CurrentCharIndex;
         return value;
     }
 
