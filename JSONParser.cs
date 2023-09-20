@@ -118,10 +118,11 @@
 
     private bool ParseTrue()
     {
-        string nextFourLetters = Input.Substring(CurrentCharIndex, 4);
-        if (nextFourLetters is "true")
+        const string trueValue = "true";
+        string nextLetters = Input.Substring(CurrentCharIndex, trueValue.Length);
+        if (nextLetters is trueValue)
         {
-            CurrentCharIndex += 4;
+            CurrentCharIndex += trueValue.Length;
             return true;
         }
         throw InvalidJSONException;
@@ -129,10 +130,11 @@
 
     private bool ParseFalse()
     {
-        string nextFiveLetters = Input.Substring(CurrentCharIndex, 5);
-        if (nextFiveLetters is "false")
+        const string falseValue = "false";
+        string nextLetters = Input.Substring(CurrentCharIndex, falseValue.Length);
+        if (nextLetters is falseValue)
         {
-            CurrentCharIndex += 5;
+            CurrentCharIndex += falseValue.Length;
             return false;
         }
         throw InvalidJSONException;
