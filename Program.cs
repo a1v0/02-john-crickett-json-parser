@@ -50,6 +50,14 @@ PrintHeadingForPassTest("correctly parses Boolean values");
 new JSONParser("{\"key1\": true, \"key2\": false}").Parse();
 
 Console.WriteLine(divider);
+PrintHeadingForPassTest("correctly parses positive integers");
+new JSONParser("{\"key1\": 1,       \"key2\"    :   123456789, \"key3\": 0    }").Parse();
+
+Console.WriteLine(divider);
+PrintHeadingForPassTest("correctly parses negative integers");
+new JSONParser("{\"key1\": -0, \"key2\": -123456789}").Parse();
+
+Console.WriteLine(divider);
 PrintHeadingForPassTest("correctly parses null values");
 new JSONParser("{\"key1\": null, \"key2\": false  }").Parse();
 
