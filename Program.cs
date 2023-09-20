@@ -13,6 +13,7 @@
  *   - numbers with multiple . or - characters
  *   - missing comma
  *   - missing closing bracket
+ *   - additional content after the final bracket, e.g. "{ } blabla"
  */
 
 string divider = "----------------------------------------------------------------------------------------";

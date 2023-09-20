@@ -26,6 +26,8 @@ public class JSONParser
 
         ParseKeyValuePairs();
 
+        // PLACEHOLDER: we need a check here to ensure there's no additional text AFTER the final bracket has closed, e.g. "{ } blabla"
+
         PrintParsedJSON();
 
         return ParsedJSON;
@@ -53,8 +55,6 @@ public class JSONParser
 
         while (OpenBraces >= noOfOpenBracesAtStart)
         {
-            // potential refactor: instead of looping until the Input is over, run this loop using the CharCounter and then, once the loop is complete, check to ensure that there are no further characters at the end of the Input
-
             string key = RetrieveKey();
             CheckForColon();
             dynamic value = RetrieveValue();
