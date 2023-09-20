@@ -40,6 +40,9 @@ new JSONParser("{\"key1\": \"value\", \"key2\": \"value\"}").Parse(); // test ca
 Console.WriteLine(divider);
 new JSONParser("{\"key1\": true, \"key2\": false}").Parse(); // test case: PASS correctly parses Boolean values
 
+Console.WriteLine(divider);
+new JSONParser("{\"key1\": null, \"key2\": false  }").Parse(); // test case: PASS correctly parses null values
+
 // FAIL TESTS
 Console.WriteLine(divider);
 new JSONParser("   {").Parse(); // test case: FAIL unclosed bracket
