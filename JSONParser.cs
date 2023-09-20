@@ -119,7 +119,11 @@
     private bool ParseTrue()
     {
         string nextFourLetters = Input.Substring(CurrentCharIndex, 4);
-        if (nextFourLetters is "true") return true;
+        if (nextFourLetters is "true")
+        {
+            CurrentCharIndex += 4;
+            return true;
+        }
         throw InvalidJSONException;
     }
 
