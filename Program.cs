@@ -26,32 +26,41 @@ string divider = "--------------------------------------------------------------
 
 // PASS TESTS
 Console.WriteLine(divider);
-new JSONParser("{}").Parse(); // test case: PASS empty JSON object
+WriteInGreen("empty JSON object");
+new JSONParser("{}").Parse();
 
 Console.WriteLine(divider);
-new JSONParser("   {          }    ").Parse(); // test case: PASS ignores whitespace between JSON content
+WriteInGreen("ignores whitespace between JSON content");
+new JSONParser("   {          }    ").Parse();
 
 Console.WriteLine(divider);
-new JSONParser("{\"key\": \"value\"}").Parse(); // test case: PASS correctly parses a string key/value pair
+WriteInGreen("correctly parses a string key/value pair");
+new JSONParser("{\"key\": \"value\"}").Parse();
 
 Console.WriteLine(divider);
-new JSONParser("{\"key1\": \"value\", \"key2\": \"value\"}").Parse(); // test case: PASS correctly parses multiple string key/value pairs
+WriteInGreen("correctly parses multiple string key/value pairs");
+new JSONParser("{\"key1\": \"value\", \"key2\": \"value\"}").Parse();
 
 Console.WriteLine(divider);
-new JSONParser("{\n\"key1\": \n\"value\", \r\"key2\":\n\r \"value\"}").Parse(); // test case: PASS correctly parses multiple string key/value pairs
+WriteInGreen("correctly parses multiple string key/value pairs");
+new JSONParser("{\n\"key1\": \n\"value\", \r\"key2\":\n\r \"value\"}").Parse();
 
 Console.WriteLine(divider);
-new JSONParser("{\"key1\": true, \"key2\": false}").Parse(); // test case: PASS correctly parses Boolean values
+WriteInGreen("correctly parses Boolean values");
+new JSONParser("{\"key1\": true, \"key2\": false}").Parse();
 
 Console.WriteLine(divider);
-new JSONParser("{\"key1\": null, \"key2\": false  }").Parse(); // test case: PASS correctly parses null values
+WriteInGreen("correctly parses null values");
+new JSONParser("{\"key1\": null, \"key2\": false  }").Parse();
 
 // FAIL TESTS
 Console.WriteLine(divider);
-new JSONParser("   {").Parse(); // test case: FAIL unclosed bracket
+WriteInRed("recognises unclosed brace");
+new JSONParser("   {").Parse();
 
 Console.WriteLine(divider);
-new JSONParser("   ").Parse(); // test case: FAIL empty string
+WriteInRed("recognises empty string");
+new JSONParser("   ").Parse();
 
 static void WriteInGreen(string message)
 {
