@@ -38,6 +38,9 @@ Console.WriteLine(divider);
 new JSONParser("{\"key1\": \"value\", \"key2\": \"value\"}").Parse(); // test case: PASS correctly parses multiple string key/value pairs
 
 Console.WriteLine(divider);
+new JSONParser("{\n\"key1\": \n\"value\", \r\"key2\":\n\r \"value\"}").Parse(); // test case: PASS correctly parses multiple string key/value pairs
+
+Console.WriteLine(divider);
 new JSONParser("{\"key1\": true, \"key2\": false}").Parse(); // test case: PASS correctly parses Boolean values
 
 Console.WriteLine(divider);
