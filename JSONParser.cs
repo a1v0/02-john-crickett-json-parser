@@ -53,14 +53,6 @@
         {
             // potential refactor: instead of looping until the Input is over, run this loop using the CharCounter and then, once the loop is complete, check to ensure that there are no further characters at the end of the Input
 
-            //
-            //
-            // what if there's no key, just a closing }, e.g. in an empty object?
-            //
-            //
-            //
-            //
-            //
             string key = RetrieveKey();
             CheckForColon();
             dynamic value = RetrieveValue();
