@@ -26,7 +26,6 @@ string divider = "--------------------------------------------------------------
 
 // PASS TESTS
 Console.WriteLine(divider);
-WriteInGreen("boobies!");
 new JSONParser("{}").Parse(); // test case: PASS empty JSON object
 
 Console.WriteLine(divider);
@@ -56,7 +55,14 @@ new JSONParser("   ").Parse(); // test case: FAIL empty string
 
 static void WriteInGreen(string message)
 {
-    Console.ForegroundColor= ConsoleColor.Green;
+    Console.ForegroundColor = ConsoleColor.Green;
     Console.WriteLine(message);
-    Console.ForegroundColor= ConsoleColor.White;
+    Console.ForegroundColor = ConsoleColor.White;
+}
+
+static void WriteInRed(string message)
+{
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine(message);
+    Console.ForegroundColor = ConsoleColor.White;
 }
