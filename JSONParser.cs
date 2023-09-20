@@ -142,7 +142,14 @@
 
     private bool? ParseNull()
     {
-        return null;
+        const string nullValue = "null";
+        string nextLetters = Input.Substring(CurrentCharIndex, nullValue.Length);
+        if (nextLetters is nullValue)
+        {
+            CurrentCharIndex += nullValue.Length;
+            return null;
+        }
+        throw InvalidJSONException;
     }
 
     private dynamic ParseNumber()
