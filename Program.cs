@@ -58,6 +58,14 @@ PrintHeadingForPassTest("correctly parses negative integers");
 new JSONParser("{\"key1\": -0, \"key2\": -123456789}").Parse();
 
 Console.WriteLine(divider);
+PrintHeadingForPassTest("correctly parses positive floats");
+new JSONParser("{\"key1\": 1.000000,       \"key2\"    :   123456789, \"key3\": 120.456789510001    }").Parse();
+
+Console.WriteLine(divider);
+PrintHeadingForPassTest("correctly parses negative floats");
+new JSONParser("{\"key1\": -0.0001, \"key2\": -12345.6789}").Parse();
+
+Console.WriteLine(divider);
 PrintHeadingForPassTest("correctly parses null values");
 new JSONParser("{\"key1\": null, \"key2\": false  }").Parse();
 
