@@ -2,13 +2,15 @@
  * Wanted to make a test suite with these tests but couldn't get xUnit to work:
  * - parses arrays
  *   - what should I parse this as? Always as an untyped collection or rather do I validate that it could work as a typed array and conditionally create an array on that basis?
- * - parses nested objects/numbers/strings/arrays/booleans
  * - parses objects
+ * - parses nested objects
+ * - parses nested arrays
  * - ignores quotation marks and brackets when escaped and in a string
  * - throws errors:
  *   - no quotes on key or string value (or single quotes)
- *   - incorrectly escaped strings
- *   - unrecognised values (including incorrectly cased NULL/TRUE etc.)
+ *   - incorrectly escaped strings (key and value)
+ *   - incorrectly cased bools or null
+ *   - numbers with multiple . or - characters
  *   - missing comma
  *   - missing closing bracket
  */
