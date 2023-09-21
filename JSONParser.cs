@@ -8,7 +8,7 @@ public class JSONParser
         CurrentCharIndex = 1;
         ParsedJSON = new Dictionary<string, dynamic>();
         InvalidJSONException = GetInvalidJSONException();
-        OpenBraces = 0;
+        OpenObjects = 0;
     }
 
     // PROPERTIES -----------------------------------------------------------------------------------------------
@@ -16,7 +16,7 @@ public class JSONParser
     private int CurrentCharIndex { get; set; }
     private readonly Dictionary<string, dynamic> ParsedJSON;
     private readonly Exception InvalidJSONException;
-    private int OpenBraces { get; set; }
+    private int OpenObjects { get; set; }
 
     // METHODS --------------------------------------------------------------------------------------------------
     public Dictionary<string, dynamic> Parse()
@@ -47,13 +47,13 @@ public class JSONParser
 
     private void ParseKeyValuePairs(Dictionary<string, dynamic> JSONObject)
     {
-        ++OpenBraces;
+        ++OpenObjects;
 
-        int noOfOpenBracesAtStart = OpenBraces;
+        int noOfOpenBracesAtStart = OpenObjects;
 
         CheckForEmptyObject();
 
-        while (OpenBraces >= noOfOpenBracesAtStart)
+        while (OpenObjects >= noOfOpenBracesAtStart)
         {
             string key = RetrieveKey();
             CheckForColon();
@@ -66,7 +66,7 @@ public class JSONParser
     private void CheckForEmptyObject()
     {
         SkipToNextNonSpaceChar();
-        if (Input[CurrentCharIndex] is '}') --OpenBraces;
+        if (Input[CurrentCharIndex] is '}') --OpenObjects;
     }
 
     private string RetrieveKey()
@@ -110,7 +110,7 @@ public class JSONParser
             case ',':
                 break;
             case '}':
-                --OpenBraces;
+                --OpenObjects;
                 break;
             default:
                 throw InvalidJSONException;
