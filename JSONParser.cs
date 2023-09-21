@@ -70,7 +70,11 @@ public class JSONParser
     private void CheckForEmptyObject()
     {
         SkipToNextNonSpaceChar();
-        if (Input[CurrentCharIndex] is '}') --OpenObjects;
+        if (Input[CurrentCharIndex] is '}')
+        {
+            ++CurrentCharIndex;
+            --OpenObjects;
+        }
     }
 
     private void CheckForEmptyArray()
