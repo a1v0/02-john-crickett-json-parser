@@ -45,7 +45,7 @@ public class JSONParser
         return new Exception(errorMessage);
     }
 
-    private void ParseKeyValuePairs(Dictionary<string,dynamic> JSONObject)
+    private void ParseKeyValuePairs(Dictionary<string, dynamic> JSONObject)
     {
         ++OpenBraces;
 
@@ -261,6 +261,10 @@ public class JSONParser
             string value = keyValuePair.Value.ToString();
             string valueType = keyValuePair.Value.GetType().Name;
 
+            if (valueType == "Dictionary`2")
+            {
+                value = ParsedJSONObjectToString(keyValuePair.Value);
+            }
             string pair = string.Format("    {0} {1}: {2} {3}", keyType, key, valueType, value);
 
             pairs.Add(pair);
