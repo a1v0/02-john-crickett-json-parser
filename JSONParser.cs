@@ -62,7 +62,7 @@ public class JSONParser
             CheckForColon();
             dynamic value = RetrieveValue();
             JSONObject.Add(key, value);
-            CheckForCommaOrEnd();
+            CheckForCommaOrCurlyBrace();
         }
     }
 
@@ -105,7 +105,8 @@ public class JSONParser
                 return ParseNumber();
         }
     }
-    private void CheckForCommaOrEnd()
+
+    private void CheckForCommaOrCurlyBrace()
     {
         SkipToNextNonSpaceChar();
         switch (Input[CurrentCharIndex])
@@ -114,6 +115,22 @@ public class JSONParser
                 break;
             case '}':
                 --OpenObjects;
+                break;
+            default:
+                throw InvalidJSONException;
+        }
+        ++CurrentCharIndex;
+    }
+
+    private void CheckForCommaOrSquareBracket()
+    {
+        SkipToNextNonSpaceChar();
+        switch (Input[CurrentCharIndex])
+        {
+            case ',':
+                break;
+            case ']':
+                --OpenArrays;
                 break;
             default:
                 throw InvalidJSONException;
@@ -214,7 +231,7 @@ public class JSONParser
         {
             dynamic value = RetrieveValue();
             parsedArray.Add(value);
-            //    CheckForCommaOrEnd();
+            CheckForCommaOrSquareBracket();
         }
 
         return parsedArray;
