@@ -1,4 +1,5 @@
 ﻿using System.Reflection.Metadata.Ecma335;
+using System.Text.Json.Nodes;
 
 public class JSONParser
 {
@@ -200,7 +201,23 @@ public class JSONParser
 
     private List<dynamic> ParseArray()
     {
-        return new List<dynamic>();
+        ++OpenArrays;
+
+        int noOfOpenArraysAtStart = OpenArrays;
+
+
+        var parsedArray = new List<dynamic>();
+
+        //CheckForEmptyObject();
+
+        while (OpenArrays>= noOfOpenArraysAtStart)
+        {
+            dynamic value = RetrieveValue();
+            parsedArray.Add(value);
+            //    CheckForCommaOrEnd();
+        }
+
+        return parsedArray;
     }
 
     private Dictionary<string, dynamic> ParseObject()
