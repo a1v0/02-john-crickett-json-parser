@@ -254,11 +254,12 @@ public class JSONParser
 
         foreach (KeyValuePair<string, dynamic> keyValuePair in dictionary)
         {
-            string type = keyValuePair.Key.GetType().Name;
             string key = keyValuePair.Key.ToString();
+            string keyType = keyValuePair.Key.GetType().Name;
             string value = keyValuePair.Value.ToString();
+            string valueType = keyValuePair.Value.GetType().Name;
 
-            string pair = string.Format("    {0} {1}: {2}", type, key, value);
+            string pair = string.Format("    {0} {1}: {2} {3}", keyType, key,valueType, value);
 
             pairs.Add(pair);
         }
