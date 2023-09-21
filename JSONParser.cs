@@ -72,6 +72,12 @@ public class JSONParser
         if (Input[CurrentCharIndex] is '}') --OpenObjects;
     }
 
+    private void CheckForEmptyArray()
+    {
+        SkipToNextNonSpaceChar();
+        if (Input[CurrentCharIndex] is ']') --OpenArrays;
+    }
+
     private string RetrieveKey()
     {
         string key = ParseString();
@@ -225,7 +231,7 @@ public class JSONParser
 
         var parsedArray = new List<dynamic>();
 
-        //CheckForEmptyObject();
+        CheckForEmptyArray();
 
         while (OpenArrays>= noOfOpenArraysAtStart)
         {
