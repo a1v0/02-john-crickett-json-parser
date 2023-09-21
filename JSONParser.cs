@@ -24,7 +24,7 @@ public class JSONParser
         if (Input.Length == 0) throw InvalidJSONException;
         if (Input[0] is not '{') throw InvalidJSONException;
 
-        ParseKeyValuePairs();
+        ParseKeyValuePairs(ParsedJSON);
 
         // PLACEHOLDER: we need a check here to ensure there's no additional text AFTER the final bracket has closed, e.g. "{ } blabla"
 
@@ -45,7 +45,7 @@ public class JSONParser
         return new Exception(errorMessage);
     }
 
-    private void ParseKeyValuePairs()
+    private void ParseKeyValuePairs(Dictionary<string,dynamic> JSONObject)
     {
         ++OpenBraces;
 
@@ -58,7 +58,7 @@ public class JSONParser
             string key = RetrieveKey();
             CheckForColon();
             dynamic value = RetrieveValue();
-            ParsedJSON.Add(key, value);
+            JSONObject.Add(key, value);
             CheckForCommaOrEnd();
         }
     }
