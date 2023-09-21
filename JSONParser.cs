@@ -308,7 +308,6 @@ public class JSONParser
         foreach (KeyValuePair<string, dynamic> keyValuePair in dictionary)
         {
             string key = keyValuePair.Key.ToString();
-            string keyType = keyValuePair.Key.GetType().Name;
             string value = keyValuePair.Value.ToString();
             string valueType = keyValuePair.Value.GetType().Name;
 
@@ -321,7 +320,7 @@ public class JSONParser
                 value = ParsedJSONArrayToString(keyValuePair.Value);
             }
 
-            string pair = string.Format(fullIndentation + "{0} {1}: {2} {3}", keyType, key, valueType, value);
+            string pair = string.Format(fullIndentation + "{0}: {1} {2}", key, valueType, value);
 
             pairs.Add(pair);
         }
