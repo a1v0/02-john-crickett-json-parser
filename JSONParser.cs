@@ -203,8 +203,10 @@ public class JSONParser
 
     private Dictionary<string, dynamic> ParseObject()
     {
-        // this one should take a CharCounter and have a while loop that loops until the number of open brackets is back to what it was before the loop began, but should otherwise follow the same process as the global while loop that loops until the text is exhausted
-        return new Dictionary<string, dynamic>();
+        ++CurrentCharIndex;
+        var JSONObject = new Dictionary<string, dynamic>();
+        ParseKeyValuePairs(JSONObject);
+        return JSONObject;
     }
 
     private string ParseString()
