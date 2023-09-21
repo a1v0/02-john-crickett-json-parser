@@ -332,7 +332,8 @@ public class JSONParser
         return "{\n" + result + "\n" + partialIndentation + "}";
     }
 
-    private static string ParsedJSONArrayToString(List<dynamic> jsonArray) {
+    private static string ParsedJSONArrayToString(List<dynamic> jsonArray)
+    {
         var values = new List<string>();
 
         foreach (dynamic jsonValue in jsonArray)
