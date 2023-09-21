@@ -68,6 +68,26 @@ PrintHeadingForPassTest("correctly parses nested objects with range of values");
 new JSONParser("{\"key1\" :   { \"key1\": 123, \"key2\":{ \"key1\": false }, \"key3\":\"hello\" },\"key2\": -1.456     }").Parse();
 
 Console.WriteLine(divider);
+PrintHeadingForPassTest("correctly parses empty array");
+new JSONParser("{\"key1\" :   [    ]     }").Parse();
+
+Console.WriteLine(divider);
+PrintHeadingForPassTest("correctly parses nested empty arrays");
+new JSONParser("{\"key1\" :   [ [[true,[12],[[[[[[[[[[[]]]]],14]]]]]]]]   ]     }").Parse();
+
+Console.WriteLine(divider);
+PrintHeadingForPassTest("correctly parses array with various data types");
+new JSONParser("{\"key1\" :   [1234, \"\", true, -0.04567, [1234]]     }").Parse();
+
+Console.WriteLine(divider);
+PrintHeadingForPassTest("correctly parses multiple arrays");
+new JSONParser("{\"key1\" :   [1234, \"\", true, -0.04567, [1234]]  , \"key2\": [   ], \"key3\": [[1, false]]   }").Parse();
+
+Console.WriteLine(divider);
+PrintHeadingForPassTest("correctly parses array with nested object");
+new JSONParser("{\"key1\" :   [{}, {\"key1\":     456       }           ]     }").Parse();
+
+Console.WriteLine(divider);
 PrintHeadingForPassTest("correctly parses null values");
 new JSONParser("{\"key1\": null, \"key2\": false  }").Parse();
 
