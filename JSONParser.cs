@@ -75,7 +75,11 @@ public class JSONParser
     private void CheckForEmptyArray()
     {
         SkipToNextNonSpaceChar();
-        if (Input[CurrentCharIndex] is ']') --OpenArrays;
+        if (Input[CurrentCharIndex] is ']')
+        {
+            ++CurrentCharIndex;
+            --OpenArrays;
+        }
     }
 
     private string RetrieveKey()
@@ -224,16 +228,17 @@ public class JSONParser
 
     private List<dynamic> ParseArray()
     {
+        ++CurrentCharIndex;
+
         ++OpenArrays;
 
         int noOfOpenArraysAtStart = OpenArrays;
-
 
         var parsedArray = new List<dynamic>();
 
         CheckForEmptyArray();
 
-        while (OpenArrays>= noOfOpenArraysAtStart)
+        while (OpenArrays >= noOfOpenArraysAtStart)
         {
             dynamic value = RetrieveValue();
             parsedArray.Add(value);
