@@ -9,6 +9,7 @@ public class JSONParser
         ParsedJSON = new Dictionary<string, dynamic>();
         InvalidJSONException = GetInvalidJSONException();
         OpenObjects = 0;
+        OpenArrays = 0;
     }
 
     // PROPERTIES -----------------------------------------------------------------------------------------------
@@ -17,6 +18,7 @@ public class JSONParser
     private readonly Dictionary<string, dynamic> ParsedJSON;
     private readonly Exception InvalidJSONException;
     private int OpenObjects { get; set; }
+    private int OpenArrays { get; set; }
 
     // METHODS --------------------------------------------------------------------------------------------------
     public Dictionary<string, dynamic> Parse()
