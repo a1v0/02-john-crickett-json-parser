@@ -27,6 +27,10 @@ PrintHeadingForPassTest("correctly parses a string key/value pair");
 new JSONParser("{\"key\": \"value\"}").Parse();
 
 Console.WriteLine(divider);
+PrintHeadingForPassTest("ignores quotation marks and brackets when escaped and in a string");
+new JSONParser("{\"key[]{}\": \"val[}u\\\"e\"}").Parse();
+
+Console.WriteLine(divider);
 PrintHeadingForPassTest("correctly parses multiple string key/value pairs");
 new JSONParser("{\"key1\": \"value\", \"key2\": \"value\"}").Parse();
 
