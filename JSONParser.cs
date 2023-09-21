@@ -250,9 +250,12 @@ public class JSONParser
         }
     }
 
-    private static string ParsedJSONObjectToString(Dictionary<string, dynamic> dictionary)
+    private static string ParsedJSONObjectToString(Dictionary<string, dynamic> dictionary, int levelOfNesting = 1)
     {
         var pairs = new List<string>();
+        int depthOfIndentation = 4;
+        string partialIndentation = new string(' ', depthOfIndentation * (levelOfNesting - 1));
+        string fullIndentation = new string(' ', depthOfIndentation * levelOfNesting);
 
         foreach (KeyValuePair<string, dynamic> keyValuePair in dictionary)
         {
@@ -263,9 +266,9 @@ public class JSONParser
 
             if (valueType == "Dictionary`2")
             {
-                value = ParsedJSONObjectToString(keyValuePair.Value);
+                value = ParsedJSONObjectToString(keyValuePair.Value, levelOfNesting + 1);
             }
-            string pair = string.Format("    {0} {1}: {2} {3}", keyType, key, valueType, value);
+            string pair = string.Format(fullIndentation + "{0} {1}: {2} {3}", keyType, key, valueType, value);
 
             pairs.Add(pair);
         }
@@ -274,6 +277,6 @@ public class JSONParser
 
         string result = String.Join(",\n", pairs.ToArray());
 
-        return "{\n" + result + "\n}";
+        return "{\n" + result + "\n" + partialIndentation + "}";
     }
 }
