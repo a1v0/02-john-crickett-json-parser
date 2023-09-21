@@ -315,6 +315,12 @@ public class JSONParser
             {
                 value = ParsedJSONObjectToString(keyValuePair.Value, levelOfNesting + 1);
             }
+            else if (valueType == "List`1")
+            {
+                value = ParsedJSONArrayToString(keyValuePair.Value);
+            }
+
+
             string pair = string.Format(fullIndentation + "{0} {1}: {2} {3}", keyType, key, valueType, value);
 
             pairs.Add(pair);
@@ -325,5 +331,9 @@ public class JSONParser
         string result = String.Join(",\n", pairs.ToArray());
 
         return "{\n" + result + "\n" + partialIndentation + "}";
+    }
+
+    private static string ParsedJSONArrayToString(List<dynamic> jsonArray) {
+        return "";
     }
 }
