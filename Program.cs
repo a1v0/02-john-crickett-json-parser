@@ -1,9 +1,9 @@
 ﻿/*
  * Wanted to make a test suite with these tests but couldn't get xUnit to work:
- * - parses arrays
- *   - what should I parse this as? Always as an untyped collection or rather do I validate that it could work as a typed array and conditionally create an array on that basis?
  * - parses objects
  * - parses nested objects
+ * - parses arrays
+ *   - what should I parse this as? Always as an untyped collection or rather do I validate that it could work as a typed array and conditionally create an array on that basis?
  * - parses nested arrays
  * - ignores quotation marks and brackets when escaped and in a string
  * - throws errors:
@@ -58,6 +58,14 @@ new JSONParser("{\"key1\": 1.000000,       \"key2\"    :   12345678.9, \"key3\":
 Console.WriteLine(divider);
 PrintHeadingForPassTest("correctly parses negative floats");
 new JSONParser("{\"key1\": -0.0001, \"key2\": -12345.6789}").Parse();
+
+Console.WriteLine(divider);
+PrintHeadingForPassTest("correctly parses empty object inside key");
+new JSONParser("{\"key1\" :   {  }     }").Parse();
+
+Console.WriteLine(divider);
+PrintHeadingForPassTest("correctly parses nested objects with range of values");
+new JSONParser("{\"key1\" :   { \"key1\": 123, \"key2\":{ \"key1\": false }, \"key2\":\"hello\" },\"key2\": -1.456     }").Parse();
 
 Console.WriteLine(divider);
 PrintHeadingForPassTest("correctly parses null values");
