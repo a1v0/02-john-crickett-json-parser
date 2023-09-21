@@ -1,4 +1,5 @@
-﻿using System.Reflection.Metadata.Ecma335;
+﻿using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 using System.Text.Json.Nodes;
 
 public class JSONParser
@@ -320,7 +321,6 @@ public class JSONParser
                 value = ParsedJSONArrayToString(keyValuePair.Value);
             }
 
-
             string pair = string.Format(fullIndentation + "{0} {1}: {2} {3}", keyType, key, valueType, value);
 
             pairs.Add(pair);
@@ -334,6 +334,31 @@ public class JSONParser
     }
 
     private static string ParsedJSONArrayToString(List<dynamic> jsonArray) {
-        return "";
+        var values = new List<string>();
+
+        foreach (dynamic jsonValue in jsonArray)
+        {
+            string value = jsonValue.ToString();
+            string valueType = jsonValue.GetType().Name;
+
+            if (valueType == "Dictionary`2")
+            {
+                value = ParsedJSONObjectToString(jsonValue);
+            }
+            else if (valueType == "List`1")
+            {
+                value = ParsedJSONArrayToString(jsonValue);
+            }
+
+            string valueAndType = string.Format("{0} {1}", valueType, value);
+
+            values.Add(valueAndType);
+        }
+
+        if (values.Count == 0) return "[]";
+
+        string result = String.Join(", ", values.ToArray());
+
+        return "[ " + result + " ]";
     }
 }
