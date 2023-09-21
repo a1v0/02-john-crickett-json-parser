@@ -14,7 +14,7 @@ public class JSONParser
     // PROPERTIES -----------------------------------------------------------------------------------------------
     private readonly string Input;
     private int CurrentCharIndex { get; set; }
-    private Dictionary<string, dynamic> ParsedJSON;
+    private readonly Dictionary<string, dynamic> ParsedJSON;
     private readonly Exception InvalidJSONException;
     private int OpenBraces { get; set; }
 
