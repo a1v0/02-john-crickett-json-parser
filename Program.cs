@@ -65,7 +65,7 @@ new JSONParser("{\"key1\" :   {  }     }").Parse();
 
 Console.WriteLine(divider);
 PrintHeadingForPassTest("correctly parses nested objects with range of values");
-new JSONParser("{\"key1\" :   { \"key1\": 123, \"key2\":{ \"key1\": false }, \"key2\":\"hello\" },\"key2\": -1.456     }").Parse();
+new JSONParser("{\"key1\" :   { \"key1\": 123, \"key2\":{ \"key1\": false }, \"key3\":\"hello\" },\"key2\": -1.456     }").Parse();
 
 Console.WriteLine(divider);
 PrintHeadingForPassTest("correctly parses null values");
