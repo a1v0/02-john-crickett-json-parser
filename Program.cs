@@ -53,7 +53,7 @@ new JSONParser("{\"key1\": -0, \"key2\": -123456789}").Parse();
 
 Console.WriteLine(divider);
 PrintHeadingForPassTest("correctly parses positive floats");
-new JSONParser("{\"key1\": 1.000000,       \"key2\"    :   123456789, \"key3\": 120.456789510001    }").Parse();
+new JSONParser("{\"key1\": 1.000000,       \"key2\"    :   12345678.9, \"key3\": 120.456789510001    }").Parse();
 
 Console.WriteLine(divider);
 PrintHeadingForPassTest("correctly parses negative floats");

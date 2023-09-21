@@ -178,18 +178,18 @@ public class JSONParser
         return ParseInteger(extractedNumber);
     }
 
-    private int ParseInteger(string number)
+    private long ParseInteger(string number)
     {
-        bool successfulConversion = int.TryParse(number, out int result);
+        bool successfulConversion = long.TryParse(number, out long result);
 
         if (!successfulConversion) throw InvalidJSONException;
 
         return result;
     }
 
-    private float ParseFloatingPoint(string number)
+    private double ParseFloatingPoint(string number)
     {
-        bool successfulConversion = float.TryParse(number, out float result);
+        bool successfulConversion = double.TryParse(number, out double result);
 
         if (!successfulConversion) throw InvalidJSONException;
 
@@ -259,7 +259,7 @@ public class JSONParser
             string value = keyValuePair.Value.ToString();
             string valueType = keyValuePair.Value.GetType().Name;
 
-            string pair = string.Format("    {0} {1}: {2} {3}", keyType, key,valueType, value);
+            string pair = string.Format("    {0} {1}: {2} {3}", keyType, key, valueType, value);
 
             pairs.Add(pair);
         }
