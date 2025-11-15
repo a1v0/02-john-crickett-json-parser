@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
 using System.Text.Json.Nodes;
 

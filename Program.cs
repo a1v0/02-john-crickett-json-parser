@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Wanted to make a test suite with these tests but couldn't get xUnit to work. I improvised, but wasn't able to ensure that the following tests throw errors
  * - throws errors:
  *   - no quotes on key or string value (or single quotes)
